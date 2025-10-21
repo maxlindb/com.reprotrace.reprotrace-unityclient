@@ -71,6 +71,7 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
         if (MBugReporterClientConfiguration.Resource != null)
             return;
 
+        CreateConfigurationAsset();
         UnityEditor.EditorUtility.DisplayDialog("ReproTrace installation", "ReproTrace needs a configuration asset to function. One was created to Resources/ReproTraceConfiguration. You'll need to set the API token there next.", "OK");        
     }
 
