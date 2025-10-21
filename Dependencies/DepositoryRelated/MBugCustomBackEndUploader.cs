@@ -42,6 +42,9 @@ public static class MBugCustomBackEndUploader
 
     public static bool UploadFile(string localPath, string depositoryPath)
     {
+        if (systemHaltedDueToMisconfiguration)
+            return false;
+
         if (!depositoryPath.StartsWith("/")) depositoryPath = "/" + depositoryPath;
 
         int retriedCount = 0;
@@ -106,6 +109,8 @@ public static class MBugCustomBackEndUploader
         }
     }
 
+    public static bool systemHaltedDueToMisconfiguration = false;
+
     private static void UploadInternal(string localPath, string depositoryPath)
     {
         var targetUrl = $"{Domain}{UploadAPIEndPoint}";
@@ -137,7 +142,11 @@ public static class MBugCustomBackEndUploader
             var respStr = new StreamReader(resp.GetResponseStream()).ReadToEnd();
 
             if (resp.StatusCode != HttpStatusCode.OK) {
-                throw new System.Exception("UploadInternal !response.IsSuccessStatusCode " + resp.StatusCode + "\n" + respStr);
+                if(resp.StatusCode == HttpStatusCode.InternalServerError && respStr.Contains("Token invalid")) {
+                    Debug.LogError("ReproTrace configuration error: API token is not valid. Disabling system.");
+                    systemHaltedDueToMisconfiguration = true;
+                }
+                else throw new System.Exception("UploadInternal !response.IsSuccessStatusCode " + resp.StatusCode + "\n" + respStr);
             }
         }
     }

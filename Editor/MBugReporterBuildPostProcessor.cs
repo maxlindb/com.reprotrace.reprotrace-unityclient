@@ -106,20 +106,21 @@ public class MBugReporterBuildPostProcessor : BuildPlayerProcessor
         }
     }
 
-    [MenuItem("Tools/MBugReporter/Create configuration asset")]
-    public static void CreateConfigurationAsset()
+
+}
+
+public class ReproTraceInstallation : AssetModificationProcessor
+{
+    static bool hooked = false;
+
+    static void OnWillCreateAsset(string path)
     {
-        if(Resources.Load<MBugReporterClientConfiguration>("MBugReporterClientConfiguration") != null) {
-            Debug.LogError("MBugReporterClientConfiguration asset already exists at "+AssetDatabase.GetAssetPath(MBugReporterClientConfiguration.Resource));
-            return;
+        Debug.Log("OnWillCreateAsset " + path);
+
+        if(!hooked && path.Contains("com.reprotrace.reprotrace-unityclient/ReproTrace.prefab")) {
+            Debug.LogError("Would now create config");
+            hooked = true;
+            UnityEditor.EditorApplication.delayCall = () => { MBugReporterClientConfiguration.PromptConfigCreation(); };
         }
-
-        var path = "Assets/Resources/MBugReporterClientConfiguration_ProjectSpecific.asset";
-        new FileInfo(MaxinRandomUtils.UnityAssetPathToAbsolutePath(path)).Directory.Create();
-
-        var obj = ScriptableObject.CreateInstance<MBugReporterClientConfiguration>();
-        AssetDatabase.CreateAsset(obj, path);
-        Selection.activeObject = obj;
-        AssetDatabase.SaveAssets();
-    }    
+    }
 }

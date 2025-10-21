@@ -126,6 +126,8 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     public Text idText;
     public InputField inputField;
 
+    public GameObject badTokenGO;
+
 
     private new void Awake()
     {
@@ -172,6 +174,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
             postedToTrelloNote.SetActive(false);
             postingToTrelloNote.SetActive(false);
             postingOldSessionsNote.SetActive(false);
+            badTokenGO.SetActive(MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration);
             if (Input.GetKeyDown(KeyCode.F8)) {
                 Debug.LogError("MBugReporter has been disabled in this configuration.");
 
@@ -445,6 +448,9 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
     private void SubmitData()
     {
+        if (MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration)
+            return;
+
         isUploading = true;
 
         try {            
