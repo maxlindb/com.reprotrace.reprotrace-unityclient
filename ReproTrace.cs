@@ -14,6 +14,7 @@ public class ReproTrace : MonoBehaviour
         InitializeReproTrace();
     }
 
+    //You can initialize the system just by calling this from anywhere, or adding the ReproTrace prefab. Both work.
     public static void InitializeReproTrace()
     {
         if (ReproTraceClientConfiguration.Resource == null) {
@@ -28,6 +29,20 @@ public class ReproTrace : MonoBehaviour
         }
                 
         var prefab = Resources.Load<GameObject>("ReproTraceMainCanvas");        
-        Instantiate(prefab, internalInstance.transform);
+        var copy = Instantiate(prefab, internalInstance.transform);
+        var rootThing = internalInstance != null ? internalInstance.transform : copy.transform;
+        rootThing.transform.SetParent(null);
+        DontDestroyOnLoad(rootThing.gameObject);
     }
+
+#if UNITY_EDITOR
+    [UnityEditor.CustomEditor(typeof(ReproTrace))]
+    public class Inspector : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            UnityEditor.EditorGUILayout.HelpBox("Put this to your menu or game scene. This will un-parent and stay alive for the entirety of your game. Alternatively, you can just call ReproTrace.InitializeReproTrace().", UnityEditor.MessageType.Info);
+        }        
+    }
+#endif
 }

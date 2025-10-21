@@ -67,7 +67,7 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
 
     public static void PromptConfigCreation()
     {
-        Debug.Log("PromptConfigCreation");
+        //Debug.Log("PromptConfigCreation");
         if (ReproTraceClientConfiguration.Resource != null)
             return;
 
@@ -111,7 +111,7 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
     {
         MBugCustomBackEndUploader.TestSettings(out var settsOK, out var error);
         if (settsOK) {
-            UnityEditor.EditorUtility.DisplayDialog("Configuration is OK", error, "OK");
+            UnityEditor.EditorUtility.DisplayDialog("Configuration is OK", error+"\n\nNow you just need to add the ReproTrace prefab to anything that is loaded early and you're done!", "OK");
         }
         else {
             UnityEditor.EditorUtility.DisplayDialog("Configuration has issues", error, "OK");
