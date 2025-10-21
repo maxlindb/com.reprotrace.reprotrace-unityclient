@@ -236,8 +236,7 @@ public static class MCrashReporterHost
             startInfo.FileName = CrashReporterExecutablePath;
         }
 
-        CrashReporterVisibilityMode vizMode = CrashReporterVisibilityMode.Hidden;
-        vizMode = CrashReporterVisibilityMode.Visible;
+        CrashReporterVisibilityMode vizMode = CrashReporterVisibilityMode.Hidden;        
         
         
         var visibleReporterFlagPath = new DirectoryInfo(BGVideoCapture.dataPath).Parent.FullName + "/visibleReporter.txt";
@@ -318,7 +317,7 @@ public static class MCrashReporterHost
     private static void DebugBlob(string blob)
     {
         var things = SeeAuth(blob);
-        Debug.Log("DEBUG BLOB:\nblob:\n"+blob+"\n\n" + MaxinRandomUtils.PrintableList(things));
+        //Debug.Log("DEBUG BLOB:\nblob:\n"+blob+"\n\n" + MaxinRandomUtils.PrintableList(things));
     }
 
     private static string[] SeeAuth(string blob)
