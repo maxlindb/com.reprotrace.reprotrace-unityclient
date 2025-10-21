@@ -16,7 +16,7 @@ public class ReproTrace : MonoBehaviour
 
     public static void InitializeReproTrace()
     {
-        if (MBugReporterClientConfiguration.Resource == null) {
+        if (ReproTraceClientConfiguration.Resource == null) {
             Debug.LogError("ReproTrace configuration is missing. Halting system.");
             MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration = true;
             return;

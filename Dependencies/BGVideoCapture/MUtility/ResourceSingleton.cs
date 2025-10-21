@@ -20,8 +20,8 @@ namespace MUtility
                 if (loaded == null) {
                     loaded = Resources.Load<T>(type.Name);
                     if (loaded == null) {
-                        if(typeof(T).Name == "MBugReporterClientConfiguration") {
-                            Debug.LogError("MBugReporter: No MBugReporterClientConfiguration asset found. Please create one from \"Tools/MBugReporter/Create configuration asset\", and configure it.");
+                        if(typeof(T).Name == "ReproTraceClientConfiguration") {
+                            Debug.LogError("MBugReporter: No ReproTraceClientConfiguration asset found. Please create one from \"Tools/ReproTrace/Create configuration asset\", and configure it.");
                             return null;
                         }
                         else throw new System.Exception("ResourceSingleton of type " + type.Name + " cannot be loaded! Be sure there exists an asset named exactly the type (\"" + type.Name + "\") directly under a folder named Resources, or one named "+type.Name+"_ProjectSpecific !");                        

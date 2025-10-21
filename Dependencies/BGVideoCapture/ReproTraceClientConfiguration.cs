@@ -6,10 +6,10 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterClientConfiguration>
+public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientConfiguration>
 {
-    //public static string kDefaultBackEndURL = "https://reprotrace.com";
-    public static string kDefaultBackEndURL = "http://localhost:7192";    
+    public static string kDefaultBackEndURL = "https://reprotrace.com";
+    //public static string kDefaultBackEndURL = "http://localhost:7192";    
 
     public string projectAPIToken;
 
@@ -34,8 +34,8 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
             label = "ReproTrace",
             guiHandler = _ =>
             {
-                if(MBugReporterClientConfiguration.Resource != null) {
-                    var serObj = new UnityEditor.SerializedObject(MBugReporterClientConfiguration.Resource);
+                if(ReproTraceClientConfiguration.Resource != null) {
+                    var serObj = new UnityEditor.SerializedObject(ReproTraceClientConfiguration.Resource);
                     DrawSettingsUI(serObj);
                 }
                 else {
@@ -48,18 +48,18 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
         };
     }
 
-    [MenuItem("Tools/MBugReporter/Create configuration asset")]
+    [MenuItem("Tools/ReproTrace/Create configuration asset")]
     public static void CreateConfigurationAsset()
     {
-        if(Resources.Load<MBugReporterClientConfiguration>("MBugReporterClientConfiguration") != null) {
-            Debug.LogError("MBugReporterClientConfiguration asset already exists at "+AssetDatabase.GetAssetPath(MBugReporterClientConfiguration.Resource));
+        if(Resources.Load<ReproTraceClientConfiguration>("ReproTraceClientConfiguration") != null) {
+            Debug.LogError("ReproTraceClientConfiguration asset already exists at " + AssetDatabase.GetAssetPath(ReproTraceClientConfiguration.Resource));
             return;
         }
 
-        var path = "Assets/Resources/MBugReporterClientConfiguration_ProjectSpecific.asset";
+        var path = "Assets/Resources/ReproTraceClientConfiguration_ProjectSpecific.asset";
         new FileInfo(MaxinRandomUtils.UnityAssetPathToAbsolutePath(path)).Directory.Create();
 
-        var obj = ScriptableObject.CreateInstance<MBugReporterClientConfiguration>();
+        var obj = ScriptableObject.CreateInstance<ReproTraceClientConfiguration>();
         AssetDatabase.CreateAsset(obj, path);
         Selection.activeObject = obj;
         AssetDatabase.SaveAssets();
@@ -68,7 +68,7 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
     public static void PromptConfigCreation()
     {
         Debug.Log("PromptConfigCreation");
-        if (MBugReporterClientConfiguration.Resource != null)
+        if (ReproTraceClientConfiguration.Resource != null)
             return;
 
         CreateConfigurationAsset();
@@ -79,7 +79,7 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
     {
         var wid = 400;
 
-        if (string.IsNullOrEmpty(MBugReporterClientConfiguration.Resource.projectAPIToken)) {
+        if (string.IsNullOrEmpty(ReproTraceClientConfiguration.Resource.projectAPIToken)) {
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical(GUILayout.MaxWidth(wid));
             EditorGUILayout.HelpBox("Create a project at ReproTrace.com and assign its token here!", MessageType.Info);
@@ -88,7 +88,7 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
             //GUILayout.Label("Create a project at ReproTrace.com and assign its token here!", GUILayout.MaxWidth(wid));
         }
 
-        if (GUILayout.Button("Open ReproTrace.com", GUILayout.MaxWidth(wid))) Application.OpenURL((MBugReporterClientConfiguration.Resource.GetbackEndURL()));
+        if (GUILayout.Button("Open ReproTrace.com", GUILayout.MaxWidth(wid))) Application.OpenURL((ReproTraceClientConfiguration.Resource.GetbackEndURL()));
         GUILayout.Space(20);
 
         UnityEditor.EditorGUILayout.PropertyField(serObj.FindProperty("projectAPIToken"), GUILayout.MaxWidth(wid));
@@ -99,7 +99,7 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
         }
     }
 
-    [UnityEditor.CustomEditor(typeof(MBugReporterClientConfiguration))]
+    [UnityEditor.CustomEditor(typeof(ReproTraceClientConfiguration))]
     public class ReproTraceSettingsEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI() {

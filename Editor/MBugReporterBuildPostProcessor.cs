@@ -119,7 +119,7 @@ public static class ReproTraceInstallation
         if (!hooked)
         {
             hooked = true;
-            UnityEditor.EditorApplication.delayCall = () => { MBugReporterClientConfiguration.PromptConfigCreation(); };
+            UnityEditor.EditorApplication.delayCall = () => { ReproTraceClientConfiguration.PromptConfigCreation(); };
         }
     }   
 }

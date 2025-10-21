@@ -338,7 +338,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
         Log("submitting bug with ID:" + fullID);
 
-        if (MBugReporterClientConfiguration.Resource.customBackEndSupportsTrello) {
+        if (ReproTraceClientConfiguration.Resource.customBackEndSupportsTrello) {
             StartCoroutine(PostBugTrelloNoting());
         }
 

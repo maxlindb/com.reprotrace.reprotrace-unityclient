@@ -27,9 +27,9 @@ public class BGVideoCapture : MonoBehaviour
         applicationDotProductName = Application.productName;
         applicationDotCompanyName = Application.companyName;
 #if !DISABLE_MBUG
-        _cached = MBugReporterClientConfiguration.Resource;
+        _cached = ReproTraceClientConfiguration.Resource;
         if(_cached == null) {
-            Debug.LogError("MBugReporter: No MBugReporterClientConfiguration asset found. Please create one from \"Tools/MBugReporter/Create configuration asset\", and configure it.");
+            Debug.LogError("MBugReporter: No ReproTraceClientConfiguration asset found. Please create one from \"Tools/ReproTrace/Create configuration asset\", and configure it.");
         }
 #endif
     }
@@ -956,7 +956,7 @@ public class BGVideoCapture : MonoBehaviour
 
     //public uint rowBytes = 3;
 
-    static MBugReporterClientConfiguration _cached;
+    static ReproTraceClientConfiguration _cached;
 
 
 
@@ -965,8 +965,8 @@ public class BGVideoCapture : MonoBehaviour
         {
             if(m_FileNameFriendlyAppProductName == null)
             {   
-                if(!string.IsNullOrEmpty(MBugReporterClientConfiguration.Resource.appNameIfDifferentFromPlayerSettings)) {
-                    m_FileNameFriendlyAppProductName = RemoveWeirdChars(MBugReporterClientConfiguration.Resource.appNameIfDifferentFromPlayerSettings);
+                if(!string.IsNullOrEmpty(ReproTraceClientConfiguration.Resource.appNameIfDifferentFromPlayerSettings)) {
+                    m_FileNameFriendlyAppProductName = RemoveWeirdChars(ReproTraceClientConfiguration.Resource.appNameIfDifferentFromPlayerSettings);
                 }
                 else {
                     m_FileNameFriendlyAppProductName = RemoveWeirdChars(applicationDotProductName);

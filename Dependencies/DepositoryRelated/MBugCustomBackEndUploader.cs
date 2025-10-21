@@ -35,8 +35,8 @@ public static class MBugCustomBackEndUploader
 
 
     public static void Initialize() {
-        configurationCustomBackendURL = MBugReporterClientConfiguration.Resource.GetbackEndURL();
-        configurationAPIToken = MBugReporterClientConfiguration.Resource.projectAPIToken;
+        configurationCustomBackendURL = ReproTraceClientConfiguration.Resource.GetbackEndURL();
+        configurationAPIToken = ReproTraceClientConfiguration.Resource.projectAPIToken;
     }
 
 
@@ -93,7 +93,7 @@ public static class MBugCustomBackEndUploader
         try
         {
             Initialize();
-            var targetUrl = $"{Domain}{TestSettingsEndPoint}/" + MBugReporterClientConfiguration.Resource.projectAPIToken;
+            var targetUrl = $"{Domain}{TestSettingsEndPoint}/" + ReproTraceClientConfiguration.Resource.projectAPIToken;
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("TomIsAGenious", "TRUE");
             var resp = client.GetStringAsync(targetUrl).Result;

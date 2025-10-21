@@ -100,7 +100,7 @@ public static class MCrashReporterHost
         }
         additionalMetadata.mbugClientVersion = MBugReporter.VERSION;
         additionalMetadata.startupScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        additionalMetadata.normalStartupSceneForGame = MBugReporterClientConfiguration.Resource.normalStartupSceneForGame;
+        additionalMetadata.normalStartupSceneForGame = ReproTraceClientConfiguration.Resource.normalStartupSceneForGame;
         if (!Application.isEditor) Debug.Log("Startup scene:" + additionalMetadata.startupScene+" normal:"+additionalMetadata.normalStartupSceneForGame+" is same:"+ additionalMetadata.startupScene == additionalMetadata.normalStartupSceneForGame);
 
         ranEarlyStart = true;
@@ -301,7 +301,7 @@ public static class MCrashReporterHost
         List<string> auths = new List<string>
         {
             //TODO
-            MBugReporterClientConfiguration.Resource.projectAPIToken
+            ReproTraceClientConfiguration.Resource.projectAPIToken
         };
 
         var pass = "76m3fmzbrb77sd3pnpde1x9jny89bsy1";
