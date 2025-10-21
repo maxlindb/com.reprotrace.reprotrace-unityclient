@@ -109,18 +109,17 @@ public class MBugReporterBuildPostProcessor : BuildPlayerProcessor
 
 }
 
-public class ReproTraceInstallation : AssetModificationProcessor
+[InitializeOnLoad]
+public static class ReproTraceInstallation
 {
     static bool hooked = false;
 
-    static void OnWillCreateAsset(string path)
+    static ReproTraceInstallation()
     {
-        Debug.Log("OnWillCreateAsset " + path);
-
-        if(!hooked && path.Contains("com.reprotrace.reprotrace-unityclient/ReproTrace.prefab")) {
-            Debug.LogError("Would now create config");
+        if (!hooked)
+        {
             hooked = true;
             UnityEditor.EditorApplication.delayCall = () => { MBugReporterClientConfiguration.PromptConfigCreation(); };
         }
-    }
+    }   
 }

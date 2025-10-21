@@ -67,6 +67,7 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
 
     public static void PromptConfigCreation()
     {
+        Debug.Log("PromptConfigCreation");
         if (MBugReporterClientConfiguration.Resource != null)
             return;
 
