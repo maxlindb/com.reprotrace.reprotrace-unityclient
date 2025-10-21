@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ae50939c56e73bf4991d2cdec5687bae
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Px437 IBM VGA8
+  fontNames:
+  - Px437 IBM VGA8
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b1750a1061d4dbd4ebd6b2796780bb7f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

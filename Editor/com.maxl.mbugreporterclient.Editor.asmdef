@@ -1,0 +1,19 @@
+{
+    "name": "com.maxl.mbugreporterclient.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d8e056827321e2540aea0bee20d1d592",
+        "GUID:d4c86dd6fdee0e2468e414f193bfdea1"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
