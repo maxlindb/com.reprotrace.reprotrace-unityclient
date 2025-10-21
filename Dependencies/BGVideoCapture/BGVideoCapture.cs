@@ -138,22 +138,33 @@ public class BGVideoCapture : MonoBehaviour
 
     public static string FFMpegPath {
         get {
-            if (undyingInstance == null)EnsureHavePathsFromMainThread();
-            var executablesPath = MBugReporter.ExecutablesRootPath;
-
-            if (Platform == FFMPEGPlatform.Windows_x64) {
-                return Path.Combine(executablesPath, "FFMPEG", "ffmpeg_windows.exe");
+            if(m_FFMpegPath == null) {
+                m_FFMpegPath = EvaluateFFMPEGPath();
             }
-            else if (Platform == FFMPEGPlatform.MacOS_x64) {
-                return Path.Combine(executablesPath, "FFMPEG", "ffmpeg_mac");
-            }
-            else if (Platform == FFMPEGPlatform.Linux_x64) {
-                return Path.Combine(executablesPath, "FFMPEG", "ffmpeg_linux"); //not included currently
-            }
-            else throw new System.Exception("BGVideoCapture: unsupported platform");
+            return m_FFMpegPath;
         }
     }
+    static string m_FFMpegPath = null;
 
+    static string EvaluateFFMPEGPath()
+    {
+        if (undyingInstance == null) EnsureHavePathsFromMainThread();
+        var executablesPath = MBugReporter.ExecutablesRootPath;
+
+        if (Platform == FFMPEGPlatform.Windows_x64)
+        {
+            return Path.Combine(executablesPath, "FFMPEG", "ffmpeg_windows.exe");
+        }
+        else if (Platform == FFMPEGPlatform.MacOS_x64)
+        {
+            return Path.Combine(executablesPath, "FFMPEG", "ffmpeg_mac");
+        }
+        else if (Platform == FFMPEGPlatform.Linux_x64)
+        {
+            return Path.Combine(executablesPath, "FFMPEG", "ffmpeg_linux"); //not included currently
+        }
+        else throw new System.Exception("BGVideoCapture: unsupported platform");
+    }
 
 
     private void EarlyInit()
