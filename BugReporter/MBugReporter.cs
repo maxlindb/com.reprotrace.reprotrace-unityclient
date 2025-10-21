@@ -173,8 +173,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
             trelloPostReminder.SetActive(false);
             postedToTrelloNote.SetActive(false);
             postingToTrelloNote.SetActive(false);
-            postingOldSessionsNote.SetActive(false);
-            badTokenGO.SetActive(MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration);
+            postingOldSessionsNote.SetActive(false);            
             if (Input.GetKeyDown(KeyCode.F8)) {
                 Debug.LogError("MBugReporter has been disabled in this configuration.");
 
@@ -182,6 +181,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
             }
             return;
         }
+        badTokenGO.SetActive(MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration);
 
 #if !DISABLE_MBUG
         try { if (onUpdate != null) onUpdate(); } catch(Exception e) { Debug.LogException(e); }
@@ -334,7 +334,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
         var websiteRoot = MBugCustomBackEndUploader.Domain;
         var urlWithID = websiteRoot + "/bugreportview?bug="+ fullID;
-        GUIUtility.systemCopyBuffer = urlWithID;
+        GUIUtility.systemCopyBuffer = TransformIDToHaveProjectName(urlWithID);
 
         Log("submitting bug with ID:" + fullID);
 
@@ -495,7 +495,12 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     private void UpdateID()
     {
         fullID = baseID + "_" + UnSpace(inputField.text);
-        idText.text = fullID;
+        idText.text = TransformIDToHaveProjectName(fullID);
+    }
+
+    public static string TransformIDToHaveProjectName(string id)
+    {
+        return id.Replace("REPLCPRODNAME", MBugCustomBackEndUploader.obtainedProjectName);
     }
 
     public static string UnSpace(string str)

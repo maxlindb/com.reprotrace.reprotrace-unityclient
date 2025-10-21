@@ -72,7 +72,7 @@ public static class MBugCustomBackEndUploader
                 LogWarning(e.ToString());
                 var retry = true;
 
-                if (retriedCount > 0) //TODO CHANGE THIS TO AT LEAST 4 AFTER CHANGEOVER IS COMPLETE
+                if (retriedCount > 2) //TODO CHANGE THIS TO AT LEAST 4 AFTER CHANGEOVER IS COMPLETE
                     retry = false;
                 
                 if (!retry) {
@@ -110,6 +110,7 @@ public static class MBugCustomBackEndUploader
     }
 
     public static bool systemHaltedDueToMisconfiguration = false;
+    public static string obtainedProjectName;
 
     private static void UploadInternal(string localPath, string depositoryPath)
     {
@@ -141,13 +142,21 @@ public static class MBugCustomBackEndUploader
             var resp = (HttpWebResponse)reqq.GetResponse();
             var respStr = new StreamReader(resp.GetResponseStream()).ReadToEnd();
 
-            if (resp.StatusCode != HttpStatusCode.OK) {
-                if(resp.StatusCode == HttpStatusCode.InternalServerError && respStr.Contains("Token invalid")) {
-                    Debug.LogError("ReproTrace configuration error: API token is not valid. Disabling system.");
-                    systemHaltedDueToMisconfiguration = true;
+            var respObj = JsonUtility.FromJson<UploadResponse>(respStr);
+            if(respObj != null) {
+                if (respObj.success) {
+                    obtainedProjectName = respObj.projectName;
                 }
-                else throw new System.Exception("UploadInternal !response.IsSuccessStatusCode " + resp.StatusCode + "\n" + respStr);
-            }
+                else {
+                    if (respObj.message.Contains("Token invalid")) {
+                        if (!systemHaltedDueToMisconfiguration) {
+                            Debug.LogError("ReproTrace configuration error: API token is not valid. Disabling system.");
+                            systemHaltedDueToMisconfiguration = true;
+                        }
+                    }
+                    else throw new System.Exception("ReproTrace server:" + respObj.message);
+                }
+            }            
         }
     }
 

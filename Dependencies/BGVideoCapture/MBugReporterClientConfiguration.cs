@@ -8,8 +8,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterClientConfiguration>
 {
-    public static string kDefaultBackEndURL = "https://reprotrace.com";
-    //public static string kDefaultBackEndURL = "http://localhost:7192";    
+    //public static string kDefaultBackEndURL = "https://reprotrace.com";
+    public static string kDefaultBackEndURL = "http://localhost:7192";    
 
     public string projectAPIToken;
 
