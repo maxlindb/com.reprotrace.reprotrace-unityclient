@@ -78,6 +78,19 @@ public class MBugReporterClientConfiguration : ResourceSingleton<MBugReporterCli
     public static void DrawSettingsUI(SerializedObject serObj)
     {
         var wid = 400;
+
+        if (string.IsNullOrEmpty(MBugReporterClientConfiguration.Resource.projectAPIToken)) {
+            GUILayout.BeginHorizontal();
+            GUILayout.BeginVertical(GUILayout.MaxWidth(wid));
+            EditorGUILayout.HelpBox("Create a project at ReproTrace.com and assign its token here!", MessageType.Info);
+            GUILayout.EndVertical();
+            GUILayout.EndHorizontal();            
+            //GUILayout.Label("Create a project at ReproTrace.com and assign its token here!", GUILayout.MaxWidth(wid));
+        }
+
+        if (GUILayout.Button("Open ReproTrace.com", GUILayout.MaxWidth(wid))) Application.OpenURL((MBugReporterClientConfiguration.Resource.GetbackEndURL()));
+        GUILayout.Space(20);
+
         UnityEditor.EditorGUILayout.PropertyField(serObj.FindProperty("projectAPIToken"), GUILayout.MaxWidth(wid));
         serObj.ApplyModifiedPropertiesWithoutUndo();
 
