@@ -66,8 +66,8 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
         get {
             if(CanSafelyCallMainThreadAPI) BGVideoCapture.EnsureHavePathsFromMainThread();
             //var editorPath = $"{BGVideoCapture.dataPath}/MBugReporter/MBugReporterConditionalStreamingAssetsAdditions~/MBug";
-            var rootPath = Path.GetFullPath("Packages/com.maxl.mbugreporterclient");
-            var editorPath = $"{rootPath}/MBugReporterConditionalStreamingAssetsAdditions~/MBug";
+            var rootPath = Path.GetFullPath("Packages/com.reprotrace.reprotrace-unityclient");
+            var editorPath = $"{rootPath}/ReproTraceClientConditionalStreamingAssetsAdditions~/ReproTrace";
             return editorPath;
         }
     }
@@ -75,7 +75,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     {
         get {
             if (CanSafelyCallMainThreadAPI) BGVideoCapture.EnsureHavePathsFromMainThread();
-            var pathInPlayer = $"{BGVideoCapture.streamingAssetsPath}/MBug";
+            var pathInPlayer = $"{BGVideoCapture.streamingAssetsPath}/ReproTrace";
             return pathInPlayer;
         }
     }

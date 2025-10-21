@@ -1,5 +1,5 @@
 {
-    "name": "MBugReporter",
+    "name": "ReproTrace Unity Client",
     "rootNamespace": "",
     "references": [
         "GUID:bbde805d927e795439d7a746d1749cab",
@@ -14,5 +14,8 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+	"additionalCompilerArguments": [
+	"-nowarn:CS8632"
+	]
 }

@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1156.5653, y: -233}
-  m_SizeDelta: {x: 1513.221, y: 145.442}
+  m_AnchoredPosition: {x: 964.8, y: -279}
+  m_SizeDelta: {x: 1832.9, y: 104.1333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8775847613019696326
 CanvasRenderer:
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MBUG_
+  m_Text: MBUG_SES_Testbed_134055276208078961_APUSTAJA-PC_Max___WindowsEditor_3d3c3ef_134055276306247028_0m9s_bugiTestiPitkaTekstiOikeinPitka
 --- !u!1 &597299805636943961
 GameObject:
   m_ObjectHideFlags: 0
@@ -3562,7 +3562,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 1118.2274, y: -296}
-  m_SizeDelta: {x: 2139.865, y: 114.277}
+  m_SizeDelta: {x: 1559.06, y: 334.582}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &609001519997956720
 CanvasRenderer:
@@ -3605,7 +3605,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Report is being sent and URL to the bug was copied to clipboard.
+  m_Text: Report is being sent and a link URL to the bug was copied to the clipboard.
 --- !u!1 &7436330569402291932
 GameObject:
   m_ObjectHideFlags: 0
