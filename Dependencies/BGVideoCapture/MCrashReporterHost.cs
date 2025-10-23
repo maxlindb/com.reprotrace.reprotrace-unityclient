@@ -25,11 +25,11 @@ public static class MCrashReporterHost
         return (BGVideoCapture.Platform == BGVideoCapture.FFMPEGPlatform.Windows_x64 ? ".exe" : "");
     }
 
-    static System.Diagnostics.Process earlyCrashReporter;
+    public static System.Diagnostics.Process earlyCrashReporter;
     static int mCrashReporterEditorRunID;
     private static string mCrashReporterActiveFlagPath = "UNSET";
 
-    private static bool ranEarlyStart = false;
+    public static bool ranEarlyStart = false;
 
     private static string companyName;
     private static string productName;

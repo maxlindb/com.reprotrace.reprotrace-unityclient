@@ -169,6 +169,28 @@ public class BGVideoCapture : MonoBehaviour
 
     private void EarlyInit()
     {
+        //no domain relaod stuff
+        recordingTime = 0f;
+		systemTurningOff = false;
+		foldersCreated.Clear();
+		haveNewSendable = false;
+		//msgPackSerializerRegistered = false; //dunno
+		sendableAttemptStarted = 0;
+		sendableAttemptFinished = 0;
+		fileUploadPassesCompleted = 0;
+		howManyOldSessionsToPost = 0;
+		stillSendingOldSessions = false;
+		howManyFoldersBeenPosted = 0;
+		
+		MBugCustomBackEndUploader.someProgress = 0f;
+		MBugCustomBackEndUploader.totalReqFails = 0;
+		MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration = false;
+		MBugCustomBackEndUploader.obtainedProjectName = "";
+		
+		MCrashReporterHost.earlyCrashReporter = null;
+		MCrashReporterHost.ranEarlyStart = false;
+
+
         if (ShouldSelfDisable) {
             DestroyImmediate(this);
             return;

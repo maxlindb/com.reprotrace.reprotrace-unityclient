@@ -16,7 +16,10 @@ using UnityEngine;
 public class MBugLogStreamer
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    public static void Early() { EarlyLog("Early SubsystemRegistration"); }
+    public static void Early() {
+        RunSuperEarlyInitialization();
+        EarlyLog("Early SubsystemRegistration");
+    }
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
     public static void Early2() { EarlyLog("Early AfterAssembliesLoaded"); }
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
@@ -33,8 +36,8 @@ public class MBugLogStreamer
 
     static MBugLogStreamer()
     {
-        //Debug.Log("Early static constructor");
-        RunSuperEarlyInitialization();        
+        Debug.Log("Early static constructor");
+        //RunSuperEarlyInitialization();  //using SubsystemRegistration instead, that works with domain reload (am told)
     }
 
 
@@ -45,7 +48,10 @@ public class MBugLogStreamer
     //It will only be cached in RAM till other systems are brought up    
     private static void RunSuperEarlyInitialization()
     {
+        logsCount = 0;
+        logQueue.Clear();
         initTime = System.DateTime.UtcNow;
+        Application.logMessageReceivedThreaded -= Application_logMessageReceivedThreaded;
         Application.logMessageReceivedThreaded += Application_logMessageReceivedThreaded;
     }
 
@@ -61,7 +67,7 @@ public class MBugLogStreamer
 
         //this spam can end up being 90% of logs when this isn't cased in a project!
         if(condition.StartsWith("Too many layers used to exclude objects from lighting")) {
-            if((timeLastGotTooManyLayersUsedToExcludeWarning - System.DateTime.UtcNow).TotalSeconds > 10d) {
+            if((System.DateTime.UtcNow - timeLastGotTooManyLayersUsedToExcludeWarning).TotalSeconds > 10d) {
                 timeLastGotTooManyLayersUsedToExcludeWarning = System.DateTime.UtcNow;
             }
             else return;
