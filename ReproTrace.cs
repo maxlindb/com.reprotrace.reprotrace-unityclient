@@ -41,7 +41,7 @@ public class ReproTrace : MonoBehaviour
     {
         public override void OnInspectorGUI()
         {
-            UnityEditor.EditorGUILayout.HelpBox("Put this to your menu or game scene. This will un-parent and stay alive for the entirety of your game. Alternatively, you can just call ReproTrace.InitializeReproTrace().", UnityEditor.MessageType.Info);
+            UnityEditor.EditorGUILayout.HelpBox("Put this to your menu or game scene. This will un-parent and stay alive for the entirety of your game. Alternatively, you can just call ReproTrace.InitializeReproTrace()", UnityEditor.MessageType.Info);
         }        
     }
 #endif
