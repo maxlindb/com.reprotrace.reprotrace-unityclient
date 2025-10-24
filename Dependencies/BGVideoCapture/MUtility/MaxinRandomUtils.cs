@@ -310,8 +310,11 @@ namespace MUtility
 			var sb = new StringBuilder();
 			var itemCount = items.Count();			
 			var max = Mathf.Min(limit, itemCount);
-			if (limit == 0) max = itemCount;
-			var wasTruncated = limit > itemCount;
+			if (limit == 0) {
+				max = itemCount;
+				limit = itemCount;
+			}
+			var wasTruncated = itemCount > limit;
 
 			var iener = items.GetEnumerator();
 			
@@ -688,11 +691,16 @@ namespace MUtility
 		    go.transform.position = shootAnchorTrans.position;
 		    var rigid = go.AddComponent<Rigidbody> ();
 		    go.transform.localScale = Vector3.one * 0.35f;
-		    rigid.velocity = shootAnchorTrans.forward * 6f;
 
-		    //go.AddComponent<DebugLogPhysicsEvents> ().doLog = false;
+#if UNITY_6000_0_OR_NEWER
+			rigid.linearVelocity = shootAnchorTrans.forward * 6f;
+#else
+            rigid.velocity = shootAnchorTrans.forward * 6f;
+#endif
 
-	    }
+            //go.AddComponent<DebugLogPhysicsEvents> ().doLog = false;
+
+        }
 
 	    [UnityEditor.MenuItem ("Tools/GroupSelectionUnderNewParent")]
 	    public static void GroupSelectionUnderNewParent() {		
@@ -783,12 +791,16 @@ namespace MUtility
             }
         }
 
-    #endif
+#endif
 
-        public static GameObject LeaveMarker (Vector3 inPos, string goname, Quaternion rot = default(Quaternion), bool makeVisible = true, Color color = default(Color), bool leaveCallStackInfo = true)
-	    {	
-		    //return;
-		    var parent = new GameObject();
+		public static GameObject LeaveMarker (Vector3 inPos, string goname, Quaternion rot = default(Quaternion), bool makeVisible = true, Color color = default(Color), bool leaveCallStackInfo = true)
+	    {
+#if !UNITY_EDITOR
+			return null;
+#endif
+
+			//return;
+			var parent = new GameObject();
 		    parent.transform.position = inPos;
 		    parent.transform.rotation = rot;
             //int tiks = Application.isPlaying ? GOTO.Utilities.PhysicsTicksCounter.Ticks : -1;
@@ -4085,7 +4097,6 @@ namespace MUtility
 		}
 
 
-
 		public static void PopOpenExplorer(string locationPathName)
 		{
 			var args = "/select," + "\"" + locationPathName + "\"" + "/separate, " + "\"" + locationPathName + "\"";
@@ -4246,7 +4257,7 @@ namespace MUtility
             }
             set {
                 t1ToT2[key] = value;
-				//t2ToT1[value] = key;
+				t2ToT1[value] = key;
             }
         }
         public T1 this[T2 key] {
@@ -4256,7 +4267,7 @@ namespace MUtility
             }
             set {
                 t2ToT1[key] = value;
-				//t1ToT2[value] = key;
+				t1ToT2[value] = key;
 			}
         }
 
@@ -4294,6 +4305,18 @@ namespace MUtility
         public void Clear() {
             t1ToT2.Clear();
             t2ToT1.Clear();
+        }
+
+
+        public void SetT1toT2(T1 t1, T2 t2)
+        {
+            t1ToT2[t1] = t2;
+            t2ToT1[t2] = t1;
+        }
+        public void SetT2toT1(T2 t2, T1 t1)
+        {
+            t2ToT1[t2] = t1;
+            t1ToT2[t1] = t2;
         }
     }
 

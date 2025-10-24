@@ -1,4 +1,5 @@
-﻿using MUtility;
+﻿using Codice.CM.Common;
+using MUtility;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -81,7 +82,11 @@ namespace MUtility
             //var found = MaxinRandomUtils.FindComponentsOfType<T>().FirstOrDefault(); //need to be able to find from disabled (GoldPanningUI case) LATER NOTE: disabled versions causes just more headache
             //Debug.Log("Foudn:" + found);
             //return found;
+#if UNITY_6000_0_OR_NEWER
+			return FindAnyObjectByType<T>();
+#else            
             return FindObjectOfType<T>();
+#endif
         }
 
         protected static T m_instance = null;

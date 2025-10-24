@@ -46,6 +46,8 @@ public static class MTypeFinder
         GeneratedTargetedTypeListIfNeeded();
     }
 
+    public static int limitScannedFromAssembliesTo = -1;
+
     static private void GeneratedTargetedTypeListIfNeeded() {
         if (cachedTargetedTypeList != null) return;
 
@@ -61,8 +63,15 @@ public static class MTypeFinder
         var md5Hasher = System.Security.Cryptography.MD5.Create();
 
 
+        int cnt = -1;
+
         //Debug.Log("Assemblies:\n" + assemblies.Select(x => x.FullName).Aggregate((k, l) => k + "\n" + l));
         foreach (var assembly in assemblies) {
+            if(limitScannedFromAssembliesTo != -1 && cnt == limitScannedFromAssembliesTo) {
+                break;
+            }
+            cnt++;
+
             var types = assembly.GetTypes();
             cachedTargetedTypeList.AddRange(types);
             foreach (var typp in types) {
