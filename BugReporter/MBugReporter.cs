@@ -946,4 +946,9 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
     public static BugReportCustomDataDelegate onProvideGameSpecificBugReporterData;
 
+
+    public static void AddContentToSession(string filePath, bool deleteFileAfter = false)
+    {
+        MCrashReporterHost.DumpExtraDataToVideoFolder(filePath, deleteFileAfter);
+    }
 }
