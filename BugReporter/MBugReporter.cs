@@ -133,11 +133,13 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     public GameObject waitStateObj;
     public Text waitStateText;
 
+    float startTim = 0f;
 
     private new void Awake()
     {
         base.Awake();
-        if(dontDestroyOnLoad) DontDestroyOnLoad(gameObject);        
+        if(dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
+        startTim = Time.realtimeSinceStartup;
     }
 
 
@@ -209,7 +211,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
             waitStateObj.SetActive(isInHaveToWaitState);
             if (isInHaveToWaitState) {
                 waitStateText.text = "Early press - Please wait few seconds for project configuration ...";
-                if(Time.time > 20f) {
+                if(Time.realtimeSinceStartup - startTim > 20f) {
                     waitStateText.text += "\n(Taking too long - Probably failing to communicate with server)";
                 }
             }
