@@ -18,6 +18,8 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     public const int VERSION = 1;
 
 
+    public const string kFakeProjectNameToReplace = "REPLCPRODNAME";
+
 #if UNITY_EDITOR
     static MBugReporter() {
         UnityEditor.EditorApplication.playModeStateChanged += EditorApplication_playModeStateChanged;
@@ -128,6 +130,9 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
     public GameObject badTokenGO;
 
+    public GameObject waitStateObj;
+    public Text waitStateText;
+
 
     private new void Awake()
     {
@@ -199,9 +204,20 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
         if (toggledRoot.activeSelf)
         {
+            var isInHaveToWaitState = MBugCustomBackEndUploader.obtainedProjConfiguration == null;
+
+            waitStateObj.SetActive(isInHaveToWaitState);
+            if (isInHaveToWaitState) {
+                waitStateText.text = "Early press - Please wait few seconds for project configuration ...";
+                if(Time.time > 20f) {
+                    waitStateText.text += "\n(Taking too long - Probably failing to communicate with server)";
+                }
+            }
+            
+
             if (!closeAfter.HasValue) {
                 UpdateID();
-                SubmitCheck();
+                if(!isInHaveToWaitState) SubmitCheck();
                 OldSessionPostCheck();
             }
 
@@ -274,7 +290,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     }
 
 
-    public string DropboxReportsRoot => "Projects/REPLCPRODNAME/MBugReports/" + BGVideoCapture.undyingInstance.GetSessionStartTimeCompartmentDirectory();
+    public string DropboxReportsRoot => "Projects/"+kFakeProjectNameToReplace+"/MBugReports/" + BGVideoCapture.undyingInstance.GetSessionStartTimeCompartmentDirectory();
 
     private void CreateSubmitFolder(string fullID)
     {
@@ -338,7 +354,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
         Log("submitting bug with ID:" + fullID);
 
-        if (ReproTraceClientConfiguration.Resource.customBackEndSupportsTrello) {
+        if (MBugCustomBackEndUploader.obtainedProjConfiguration.projectHasTrelloEnabled) {
             StartCoroutine(PostBugTrelloNoting());
         }
 
@@ -397,7 +413,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
                         var addToTrelloEndPoint = MBugCustomBackEndUploader.Domain + "/api/BugReports/AddToTrello";
                         using (var client = new HttpClient())
                         {
-                            var fullUrl = addToTrelloEndPoint + "?token=" + MBugCustomBackEndUploader.configurationAPIToken + "&bug=" + fullID;
+                            var fullUrl = addToTrelloEndPoint + "?token=" + MBugCustomBackEndUploader.configurationAPIToken + "&bug=" + TransformIDToHaveProjectName(fullID);
                             var result = client.GetStringAsync(fullUrl).Result;
                             if(!result.Contains("{") || !result.Contains("}") || !result.Contains("idShort")) {
                                 success = false;
@@ -498,9 +514,13 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
         idText.text = TransformIDToHaveProjectName(fullID);
     }
 
+    
+
     public static string TransformIDToHaveProjectName(string id)
     {
-        return id.Replace("REPLCPRODNAME", MBugCustomBackEndUploader.obtainedProjectName);
+        var projName = kFakeProjectNameToReplace;
+        if (MBugCustomBackEndUploader.obtainedProjConfiguration != null) projName = MBugCustomBackEndUploader.obtainedProjConfiguration.projectName;
+        return id.Replace(kFakeProjectNameToReplace, projName);
     }
 
     public static string UnSpace(string str)

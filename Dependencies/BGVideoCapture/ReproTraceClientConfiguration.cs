@@ -12,13 +12,9 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
     //public static string kDefaultBackEndURL = "http://localhost:7192";    
 
     public string projectAPIToken;
+    
+    public string normalStartupSceneForGame; //todo expose somewhere
 
-    //TODO remove specific values  from code before ship
-    public string appNameIfDifferentFromPlayerSettings;
-    public string normalStartupSceneForGame;
-
-
-    public bool customBackEndSupportsTrello = false;
 
     public string GetbackEndURL()
     {

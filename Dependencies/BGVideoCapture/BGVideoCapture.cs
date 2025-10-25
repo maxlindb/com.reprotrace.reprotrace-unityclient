@@ -185,7 +185,7 @@ public class BGVideoCapture : MonoBehaviour
 		MBugCustomBackEndUploader.someProgress = 0f;
 		MBugCustomBackEndUploader.totalReqFails = 0;
 		MBugCustomBackEndUploader.systemHaltedDueToMisconfiguration = false;
-		MBugCustomBackEndUploader.obtainedProjectName = "";
+        MBugCustomBackEndUploader.obtainedProjConfiguration = null;
 		
 		MCrashReporterHost.earlyCrashReporter = null;
 		MCrashReporterHost.ranEarlyStart = false;
@@ -319,7 +319,7 @@ public class BGVideoCapture : MonoBehaviour
         var machineID = $"{RemoveWeirdChars(System.Environment.MachineName)}_{RemoveWeirdChars(userName)}_" + RemoveWeirdChars(machineIDExtraPostFix);
         //var editorOrNot = Application.isEditor ? "EDITOR" : "BUILD";        
         //sessionID = "SES_" + FileNameFriendlyAppProductName + "_" + startTime.ToFileTime().ToString()+"_"+machineID+"__"+editorOrNot;
-        sessionID = "SES_" + "REPLCPRODNAME" + "_" + startTime.ToFileTime().ToString() + "_" + machineID + "__" + Application.platform;
+        sessionID = "SES_" + MBugReporter.kFakeProjectNameToReplace + "_" + startTime.ToFileTime().ToString() + "_" + machineID + "__" + Application.platform;
 
         string csStr = "CSFAIL-TOP";
         try {
@@ -982,26 +982,6 @@ public class BGVideoCapture : MonoBehaviour
 
 
 
-    public static string FileNameFriendlyAppProductName {
-        get
-        {
-            if(m_FileNameFriendlyAppProductName == null)
-            {   
-                if(!string.IsNullOrEmpty(ReproTraceClientConfiguration.Resource.appNameIfDifferentFromPlayerSettings)) {
-                    m_FileNameFriendlyAppProductName = RemoveWeirdChars(ReproTraceClientConfiguration.Resource.appNameIfDifferentFromPlayerSettings);
-                }
-                else {
-                    m_FileNameFriendlyAppProductName = RemoveWeirdChars(applicationDotProductName);
-                }                
-            }
-
-            return m_FileNameFriendlyAppProductName;
-        }
-    }
-    private static string m_FileNameFriendlyAppProductName = null;
-
-
-
     private void ProcessDoneSegment(int processingSegmentIndex, int fromFrame, int toFrame, string processingSegmentFolderMaybe)
     {
         streamingAssetsPath = Application.streamingAssetsPath;
@@ -1414,7 +1394,7 @@ public class BGVideoCapture : MonoBehaviour
     {
         var parsed = BGVideoSessionInfo.GetFromString(sessionName);
 
-        var finalFolder = "Projects/REPLCPRODNAME/FullSessions" + "/" + GetTimeCompartmentDirectory(parsed.startTime) + "/" + sessionName;
+        var finalFolder = "Projects/"+MBugReporter.kFakeProjectNameToReplace+"/FullSessions" + "/" + GetTimeCompartmentDirectory(parsed.startTime) + "/" + sessionName;
         return finalFolder;
     }
 

@@ -110,7 +110,11 @@ public static class MBugCustomBackEndUploader
     }
 
     public static bool systemHaltedDueToMisconfiguration = false;
-    public static string obtainedProjectName;
+
+
+
+    public static ObtainedProjectConfiguration obtainedProjConfiguration = null;
+    
 
     private static void UploadInternal(string localPath, string depositoryPath)
     {
@@ -145,7 +149,7 @@ public static class MBugCustomBackEndUploader
             var respObj = JsonUtility.FromJson<UploadResponse>(respStr);
             if(respObj != null) {
                 if (respObj.success) {
-                    obtainedProjectName = respObj.projectName;
+                    obtainedProjConfiguration = respObj.projectConfiguration;
                 }
                 else {
                     if (respObj.message.Contains("Token invalid")) {

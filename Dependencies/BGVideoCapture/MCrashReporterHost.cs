@@ -283,7 +283,7 @@ public static class MCrashReporterHost
             + "\"" + false + "\" "
             + "\"" + false + "\" "
             + "\"" + MBugCustomBackEndUploader.Domain + "\" "
-            + "\"" + BGVideoCapture.FileNameFriendlyAppProductName + "\" "
+            + "\"" + MBugReporter.kFakeProjectNameToReplace + "\" "
             + "\"" + GetAuthBlobBase64() + "\" "
             + "\"" + sessionLocalFolder + "\"";
         
