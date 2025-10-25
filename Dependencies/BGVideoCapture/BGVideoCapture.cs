@@ -20,6 +20,7 @@ public class BGVideoCapture : MonoBehaviour
 {
     public static void EnsureHavePathsFromMainThread()
     {
+        if (!string.IsNullOrEmpty(temporaryDataPath)) return;
         streamingAssetsPath = Application.streamingAssetsPath;
         temporaryDataPath = Application.temporaryCachePath;
         dataPath = Application.dataPath;
@@ -199,10 +200,7 @@ public class BGVideoCapture : MonoBehaviour
         undyingInstance = this;
 
         InitUploader();
-
-        streamingAssetsPath = Application.streamingAssetsPath;
-        persistentDataPath = Application.persistentDataPath;
-        dataPath = Application.dataPath;
+        EnsureHavePathsFromMainThread();
         startTime = System.DateTime.UtcNow;
         extension = "." + imageFormatToUse.ToString().ToLower();
 
