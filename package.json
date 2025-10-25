@@ -1,7 +1,7 @@
 {
   "name": "com.reprotrace.reprotrace-unityclient",
   "displayName": "ReproTrace (Unity Client)",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "unity": "2022.3",
   "description": "Bug reporter that sends game render output, logs, and other telemetry to reprotrace.com to be viewed and analyzed centrally. Snip bug reports by pressing F8.",
   "keywords": [
