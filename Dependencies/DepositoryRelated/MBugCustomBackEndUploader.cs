@@ -14,8 +14,7 @@ public static class MBugCustomBackEndUploader
 {
     public static string configurationCustomBackendURL;
     public static string configurationAPIToken;
-
-    //public static string Domain => "https://localhost:7192";
+        
     public static string Domain => configurationCustomBackendURL;    
 
 
