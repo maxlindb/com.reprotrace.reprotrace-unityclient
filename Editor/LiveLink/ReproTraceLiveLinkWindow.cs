@@ -16,7 +16,7 @@ public class ReproTraceLiveLinkWindow : EditorWindow
 {
     public static ReproTraceLiveLinkCommandCallback onCommand = null;
 
-    bool poll;
+    const bool poll = true;
     string machineName;
     string lastResponse = "";
     double nextPoll;
@@ -35,7 +35,7 @@ public class ReproTraceLiveLinkWindow : EditorWindow
     {
         EditorGUILayout.LabelField("Backend", ReproTraceClientConfiguration.Resource.GetbackEndURL());
         machineName = EditorGUILayout.TextField("Machine", machineName);
-        poll = EditorGUILayout.Toggle("Live poll (1 Hz)", poll);
+        //poll = EditorGUILayout.Toggle("Live poll (1 Hz)", poll);
         if (GUILayout.Button("Poll now")) DoPoll();
         EditorGUILayout.LabelField("Last response:");
         var style = new GUIStyle(EditorStyles.textArea) { wordWrap = true };
