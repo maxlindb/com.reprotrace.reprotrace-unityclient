@@ -191,6 +191,8 @@ public class BGVideoCapture : MonoBehaviour
 		MCrashReporterHost.earlyCrashReporter = null;
 		MCrashReporterHost.ranEarlyStart = false;
 
+        MCrashReporterHost.streamedDataBatchCount = 0;
+
 
         if (ShouldSelfDisable) {
             DestroyImmediate(this);

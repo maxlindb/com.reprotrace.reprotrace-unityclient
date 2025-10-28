@@ -415,17 +415,17 @@ public static class MCrashReporterHost
         dataFlushTimer = new Timer(FlushStreamedData, null, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(2d)); //delay first send a bit too due to order of exec causing the folder possibly not even existing otherwise
     }
 
-    static int batchCount = -1;
+    public static int streamedDataBatchCount = -1;
     private static Timer dataFlushTimer;
 
     private static void FlushStreamedData(object state)
     {
         try
         {
-            batchCount++;
+            streamedDataBatchCount++;
 
             var dataBatch = new MBugStreamedDataBatch();
-            dataBatch.batchNumber = batchCount;
+            dataBatch.batchNumber = streamedDataBatchCount;
             dataBatch.logEntries = MBugLogStreamer.PopQueue();
             dataBatch.framesData = MBugFrameTimingStreamer.PopQueue();
 
