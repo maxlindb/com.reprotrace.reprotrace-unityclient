@@ -36,7 +36,7 @@ public class MBugLogStreamer
 
     static MBugLogStreamer()
     {
-        Debug.Log("Early static constructor");
+        //Debug.Log("Early static constructor");
         //RunSuperEarlyInitialization();  //using SubsystemRegistration instead, that works with domain reload (am told)
     }
 
