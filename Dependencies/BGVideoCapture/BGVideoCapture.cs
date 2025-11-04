@@ -1018,7 +1018,8 @@ public class BGVideoCapture : MonoBehaviour
                     SetSessionContentReadyToUpload(compressedVidPath, true);
                 }
                 catch (System.Threading.ThreadAbortException) {
-                    Debug.Log("Ignore the following ThreadAbortException, it's normal");                        
+                    Debug.Log("Ignore the following ThreadAbortException, it's normal");
+                    try { System.Threading.Thread.ResetAbort(); } catch { } // cancels the automatic rethrow
                     return;
                 }
                 catch (System.Exception e) {
