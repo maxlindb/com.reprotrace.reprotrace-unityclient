@@ -1,5 +1,4 @@
 #if UNITY_EDITOR
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,7 +72,7 @@ public class ReproTraceLiveLinkWindow : EditorWindow
         if (!string.IsNullOrEmpty(lastResponse)) {
             if(lastResponseRan != lastResponse) {
                 lastResponseRan = lastResponse;
-                var parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<LiveLinkAdvertiseAndGetCommandResponse>(lastResponse);
+                var parsed = JsonUtility.FromJson<LiveLinkAdvertiseAndGetCommandResponse>(lastResponse);
 
                 foreach (var item in parsed.commandsToRun)
                 {
@@ -101,7 +100,7 @@ public class ReproTraceLiveLinkWindow : EditorWindow
                 var req = (HttpWebRequest)WebRequest.Create(url);
                 req.Method = "POST";
                 req.Headers.Add("token", token);
-                var body = JsonConvert.SerializeObject(new LiveLinkAdvertiseAndGetCommandRequest { computerName = machineName });
+                var body = JsonUtility.ToJson(new LiveLinkAdvertiseAndGetCommandRequest { computerName = machineName });
                 var bytes = Encoding.UTF8.GetBytes(body);
                 req.ContentType = "application/json";
                 req.ContentLength = bytes.Length;

@@ -18,17 +18,20 @@ public class ObtainedProjectConfiguration
 }
 
 
+[System.Serializable]
 public class LiveLinkAdvertiseAndGetCommandRequest
 {
     public string computerName;
 }
 
+[System.Serializable]
 public class LiveLinkAdvertiseAndGetCommandResponse
 {
     public string error;
     public List<PendingLiveCommand> commandsToRun;
 }
 
+[System.Serializable]
 public class PendingLiveCommand
 {
     public string guid;
@@ -37,5 +40,5 @@ public class PendingLiveCommand
     public string command;
     public string fileUrl;
     public string fileName;
-    public DateTime timeIssued;
+    public long timeIssuedTicks;
 }
