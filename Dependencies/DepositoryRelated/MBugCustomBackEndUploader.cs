@@ -180,6 +180,7 @@ public static class MBugCustomBackEndUploader
         Debug.LogWarning(v);
     }
 
+    //NOTE: UNUSED !!!!!
     public static bool UploadStreamedData(string json, string sessionID)
     {
         var targetUrl = $"{Domain}{StreamUPloadAPIEndPoint}";
