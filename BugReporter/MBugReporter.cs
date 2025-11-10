@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+
 public class MBugReporter : MUtility.Singleton<MBugReporter>
 {
     //added 17.3.2024.
