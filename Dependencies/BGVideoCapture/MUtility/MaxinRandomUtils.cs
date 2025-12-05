@@ -4149,6 +4149,81 @@ namespace MUtility
                 list[n] = value;
             }
         }
+
+
+
+        /// <summary>
+        /// Returns the closest point inside the volume of the given Transform to refPoint.
+        /// The volume is computed from all Renderer bounds under the transform, in the
+        /// transform's local space, so it works correctly for any rotation.
+        /// </summary>
+        public static Vector3 ClosestPointInsideTransformVolume(Transform root, Vector3 refPoint)
+        {
+            var renderers = root.GetComponentsInChildren<Renderer>();
+            if (renderers.Length == 0)
+            {
+                // Fallback: no renderers, just return the transform position
+                return root.position;
+            }
+
+            // We'll build a combined Bounds in root's local space
+            var localToWorld = root.localToWorldMatrix;
+            var worldToLocal = localToWorld.inverse;
+
+            bool hasInit = false;
+            Bounds localBounds = new Bounds();
+
+            foreach (var r in renderers)
+            {
+                Bounds worldBounds = r.bounds; // world-space AABB
+
+                Vector3 c = worldBounds.center;
+                Vector3 e = worldBounds.extents;
+
+                // 8 corners of the world-space AABB
+                for (int ix = -1; ix <= 1; ix += 2)
+                    for (int iy = -1; iy <= 1; iy += 2)
+                        for (int iz = -1; iz <= 1; iz += 2)
+                        {
+                            Vector3 cornerWorld = new Vector3(
+                                c.x + e.x * ix,
+                                c.y + e.y * iy,
+                                c.z + e.z * iz
+                            );
+
+                            Vector3 cornerLocal = worldToLocal.MultiplyPoint3x4(cornerWorld);
+
+                            if (!hasInit)
+                            {
+                                localBounds = new Bounds(cornerLocal, Vector3.zero);
+                                hasInit = true;
+                            }
+                            else
+                            {
+                                localBounds.Encapsulate(cornerLocal);
+                            }
+                        }
+            }
+
+            // Now localBounds is an axis-aligned box in root.local space,
+            // which corresponds to an oriented box in world space.
+
+            // Convert refPoint to local space of root
+            Vector3 refLocal = root.InverseTransformPoint(refPoint);
+
+            // Clamp inside the local bounds
+            Vector3 min = localBounds.min;
+            Vector3 max = localBounds.max;
+
+            Vector3 clampedLocal = new Vector3(
+                Mathf.Clamp(refLocal.x, min.x, max.x),
+                Mathf.Clamp(refLocal.y, min.y, max.y),
+                Mathf.Clamp(refLocal.z, min.z, max.z)
+            );
+
+            // Back to world space
+            return root.TransformPoint(clampedLocal);
+        }
     }
 
 	public class MarkdownTable
