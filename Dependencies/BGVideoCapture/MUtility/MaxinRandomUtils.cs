@@ -2012,12 +2012,12 @@ namespace MUtility
 		    return len;
 	    }
 
-	    public static UnityEngine.AI.NavMeshPath FindPathSimple (Vector3 fromPos, Vector3 position2, bool ifIncompleteReturnNull)
+	    public static UnityEngine.AI.NavMeshPath FindPathSimple (Vector3 fromPos, Vector3 position2, bool ifIncompleteReturnNull, int agentTypeID = 0)
 	    {
 		    fromPos = ClampPosToNavMesh (fromPos, true);
 
 		    var tempPath = new UnityEngine.AI.NavMeshPath();
-		    var couldCalcPath = UnityEngine.AI.NavMesh.CalculatePath (fromPos, position2, int.MaxValue, tempPath);
+		    var couldCalcPath = UnityEngine.AI.NavMesh.CalculatePath (fromPos, position2, new NavMeshQueryFilter { agentTypeID = agentTypeID, areaMask = int.MaxValue },  tempPath);
 
 		    if (!couldCalcPath) return null;
 		    if (ifIncompleteReturnNull) {
