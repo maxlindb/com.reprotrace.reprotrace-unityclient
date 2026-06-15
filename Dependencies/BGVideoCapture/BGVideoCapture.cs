@@ -678,7 +678,7 @@ public class BGVideoCapture : MonoBehaviour
     public static Material GetDownScalingMaterial()
     {
         if(boxDownScalingMaterial == null) {
-            boxDownScalingMaterial = Resources.Load<Material>("DownScalingMaterial");
+            boxDownScalingMaterial = Resources.Load<Material>("BoxDownScalingMaterial");
         }
         return boxDownScalingMaterial;
     }
