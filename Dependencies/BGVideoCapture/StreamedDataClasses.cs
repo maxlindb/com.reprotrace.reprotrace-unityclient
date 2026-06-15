@@ -26,7 +26,7 @@ public class UnityLogEntry
     [Key(0)]public int idx = 0;
     [Key(1)]public string content;
     [Key(2)]public string stacktrace;
-    [Key(3)]public LogType logType;
+    [Key(3)]public UnityLogType logType;
     
     [Key(4)]public long utcRealTimeTicks;
     [Key(5)]public long realTimeFromStartTicks;
@@ -37,7 +37,7 @@ public class UnityLogEntry
     [Key(10)]public double bgVideoTime;
 }
 
-public enum LogType
+public enum UnityLogType
 {
     Error,
     Assert,

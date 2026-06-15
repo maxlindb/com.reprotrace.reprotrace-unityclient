@@ -15,16 +15,16 @@
 namespace MessagePack.Formatters
 {
 
-    public sealed class LogTypeFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::LogType>
+    public sealed class LogTypeFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::UnityLogType>
     {
-        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::LogType value, global::MessagePack.MessagePackSerializerOptions options)
+        public void Serialize(ref global::MessagePack.MessagePackWriter writer, global::UnityLogType value, global::MessagePack.MessagePackSerializerOptions options)
         {
             writer.Write((global::System.Int32)value);
         }
 
-        public global::LogType Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        public global::UnityLogType Deserialize(ref global::MessagePack.MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
         {
-            return (global::LogType)reader.ReadInt32();
+            return (global::UnityLogType)reader.ReadInt32();
         }
     }
 }

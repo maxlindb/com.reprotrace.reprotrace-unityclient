@@ -276,7 +276,7 @@ public static class MCrashReporterHost
             + "\"" + platform.ToString() + "\" "
             + "\"" + companyName + "\" "
             + "\"" + productName + "\" "
-            + "\"" + MChangesetIdentification.GetShortChangesetHash() + "\" "
+            + "\"" + MChangesetIdentificationReproTrace.GetShortChangesetHash() + "\" "
             + "\"" + vizMode.ToString() + "\" "
 
             + "\"" + true + "\" "

@@ -52,7 +52,7 @@ namespace MessagePack.Resolvers
             {
                 { typeof(global::System.Collections.Generic.List<global::UnityFrameData>), 0 },
                 { typeof(global::System.Collections.Generic.List<global::UnityLogEntry>), 1 },
-                { typeof(global::LogType), 2 },
+                { typeof(global::UnityLogType), 2 },
                 { typeof(global::MBugStreamedDataBatch), 3 },
                 { typeof(global::UnityFrameData), 4 },
                 { typeof(global::UnityLogEntry), 5 },

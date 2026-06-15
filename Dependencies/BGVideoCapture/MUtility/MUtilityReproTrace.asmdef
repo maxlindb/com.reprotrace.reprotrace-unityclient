@@ -1,18 +1,15 @@
 {
-    "name": "com.maxl.mbugreporterclient.Editor",
+    "name": "MUtilityReproTrace",
     "rootNamespace": "",
     "references": [
-        "GUID:d8e056827321e2540aea0bee20d1d592",
-        "GUID:faf8551a95557cd438384b89e3dc4239"
+        "GUID:1826c0224c0d048b88112c79bbb0cd85"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

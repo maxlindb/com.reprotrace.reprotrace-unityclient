@@ -77,7 +77,7 @@ public class MBugLogStreamer
         entry.idx = logsCount;
         entry.content = condition;
         entry.stacktrace = stackTrace;
-        entry.logType = (LogType)type;
+        entry.logType = (UnityLogType)type;
 
         entry.utcRealTimeTicks = System.DateTime.UtcNow.Ticks;
         entry.realTimeFromStartTicks = (System.DateTime.UtcNow - initTime).Ticks;

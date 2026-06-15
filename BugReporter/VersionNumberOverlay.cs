@@ -6,6 +6,6 @@ public class VersionNumberOverlay : MonoBehaviour
 {
     private void OnGUI()
     {
-        GUILayout.Label("Commit:"+MChangesetIdentification.GetShortChangesetHash());
+        GUILayout.Label("Commit:"+MChangesetIdentificationReproTrace.GetShortChangesetHash());
     }
 }

@@ -361,7 +361,7 @@ public class BGVideoCapture : MonoBehaviour
 
     public string GetShortBuildAndEnvTypeIdentifyingString()
     {
-        return MChangesetIdentification.GetShortChangesetHash();
+        return MChangesetIdentificationReproTrace.GetShortChangesetHash();
         //return "afc8f6e"; //example
         //return "putChangeSetHere";
         //return "cs1312"; //example

@@ -33,7 +33,7 @@ namespace MessagePack.Formatters
             writer.Write(value.idx);
             global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<string>(formatterResolver).Serialize(ref writer, value.content, options);
             global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<string>(formatterResolver).Serialize(ref writer, value.stacktrace, options);
-            global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<global::LogType>(formatterResolver).Serialize(ref writer, value.logType, options);
+            global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<global::UnityLogType>(formatterResolver).Serialize(ref writer, value.logType, options);
             writer.Write(value.utcRealTimeTicks);
             writer.Write(value.realTimeFromStartTicks);
             writer.Write(value.scaledTime);
@@ -69,7 +69,7 @@ namespace MessagePack.Formatters
                         ____result.stacktrace = global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<string>(formatterResolver).Deserialize(ref reader, options);
                         break;
                     case 3:
-                        ____result.logType = global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<global::LogType>(formatterResolver).Deserialize(ref reader, options);
+                        ____result.logType = global::MessagePack.FormatterResolverExtensions.GetFormatterWithVerify<global::UnityLogType>(formatterResolver).Deserialize(ref reader, options);
                         break;
                     case 4:
                         ____result.utcRealTimeTicks = reader.ReadInt64();
