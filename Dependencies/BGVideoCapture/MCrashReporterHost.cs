@@ -86,7 +86,7 @@ public static class MCrashReporterHost
 
         //log some interesting things, mostly relevant to builds only
         if (!Application.isEditor) {
-            MPerf.StableFPSCounter.periodicallyLogFps = true;
+            MPerf.StableFPSCounterReproTrace.periodicallyLogFps = true;
 
             new Thread(() => {
                 MachineCheck();

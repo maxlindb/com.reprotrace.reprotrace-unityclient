@@ -4,9 +4,9 @@ using UnityEngine;
 using System.Diagnostics;
 
 namespace MPerf {
-    public class PlayerLoopStartMeter : MonoBehaviour {
+    public class PlayerLoopStartMeterReproTrace : MonoBehaviour {
 
-        static PlayerLoopStartMeter instance = null;
+        static PlayerLoopStartMeterReproTrace instance = null;
 
 	    public static float timeLastUpdateLoopStarted;
 	    public static float timeLastFixedUpdateLoopStarted;
@@ -43,13 +43,14 @@ namespace MPerf {
             scaledTimeCachedForUpdateAndAfter = Time.timeAsDouble;
             //UnityEngine.Debug.Log(allTimer.ElapsedMilliseconds + " firstupdate");
 		    timeLastUpdateLoopStarted = Time.realtimeSinceStartup;
+            //UnityEngine.Debug.Log("START " + Time.frameCount);
             //fromFramefirstUpdateCallTimer = System.Diagnostics.Stopwatch.StartNew();
 
             fixedsPerLastRenderedFrame = fixedPerUpdateCounter;
 		    fixedPerUpdateCounter = 0;
 
 		    if(Time.timeScale == 0f)lastFirstFixedForFrameOrPausedFirstUpdateStart = Time.realtimeSinceStartup;
-		    if(Time.timeScale == 0f)lastApproxOutsideScriptsOfFrameTimeSpent = Time.realtimeSinceStartup - PlayerLoopEndMeter.timestampLastUpdateEnd;
+		    if(Time.timeScale == 0f)lastApproxOutsideScriptsOfFrameTimeSpent = Time.realtimeSinceStartup - PlayerLoopEndMeterReproTrace.timestampLastUpdateEnd;
 
             frameCount = Time.frameCount;
 
@@ -79,7 +80,7 @@ namespace MPerf {
 
             timeLastSingleFixedUpdateStarted = Time.realtimeSinceStartup;
 
-		    lastApproxOutsideScriptsOfFrameTimeSpent = Time.realtimeSinceStartup - PlayerLoopEndMeter.timestampLastUpdateEnd;
+		    lastApproxOutsideScriptsOfFrameTimeSpent = Time.realtimeSinceStartup - PlayerLoopEndMeterReproTrace.timestampLastUpdateEnd;
 
 		    if(lastFrame != Time.frameCount) {
 			    //Aslog.Log("first fixed for frame");

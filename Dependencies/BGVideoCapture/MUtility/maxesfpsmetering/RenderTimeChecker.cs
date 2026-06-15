@@ -57,7 +57,7 @@ namespace MPerf {
             if(debugOrder) {
                 bool isNewFrame = Time.frameCount != lastFrameOrderCheck;
 
-                var debugStr = isNewFrame ? "NEWFRAME" : StableFPSCounter.ToNiceMSString(Time.realtimeSinceStartup - lastTimeLog);
+                var debugStr = isNewFrame ? "NEWFRAME" : StableFPSCounterReproTrace.ToNiceMSString(Time.realtimeSinceStartup - lastTimeLog);
 
                 Debug.Log("RenderTimeChecker.LogOrder [" + v + "]: "+ debugStr);
 

@@ -50,9 +50,9 @@ public class MBugFrameTimingStreamer : MonoBehaviour
         }
 
         previousFrame.fullFrameDuration = Time.unscaledDeltaTime;
-        previousFrame.behaviourUpdateDuration = PlayerLoopEndMeter.lastUpdateLoopLen;
-        previousFrame.fixedUpdatesDuration = PlayerLoopEndMeter.timeSpentInFixedUpdatesLastFrame; //TODO check if this even the right frame
-        previousFrame.fixedUpdatesCount = PlayerLoopStartMeter.fixedsPerLastRenderedFrame;
+        previousFrame.behaviourUpdateDuration = PlayerLoopEndMeterReproTrace.lastUpdateLoopLen;
+        previousFrame.fixedUpdatesDuration = PlayerLoopEndMeterReproTrace.timeSpentInFixedUpdatesLastFrame; //TODO check if this even the right frame
+        previousFrame.fixedUpdatesCount = PlayerLoopStartMeterReproTrace.fixedsPerLastRenderedFrame;
 
         previousFrame.bgVideoTime = BGVideoCapture.RecordingTime;
         previousFrame.bgVideoFrame = BGVideoCapture.TotalFrameNum;

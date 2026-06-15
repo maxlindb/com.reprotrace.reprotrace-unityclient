@@ -81,9 +81,9 @@ public class MBugLogStreamer
 
         entry.utcRealTimeTicks = System.DateTime.UtcNow.Ticks;
         entry.realTimeFromStartTicks = (System.DateTime.UtcNow - initTime).Ticks;
-        entry.scaledTime = PlayerLoopStartMeter.scaledTimeCachedForUpdateAndAfter;
-        entry.frame = PlayerLoopEndMeter.frameCachedForOtherThreads;
-        entry.fixedUpdateTick = PlayerLoopStartMeter.fixedUpdateCached;
+        entry.scaledTime = PlayerLoopStartMeterReproTrace.scaledTimeCachedForUpdateAndAfter;
+        entry.frame = PlayerLoopEndMeterReproTrace.frameCachedForOtherThreads;
+        entry.fixedUpdateTick = PlayerLoopStartMeterReproTrace.fixedUpdateCached;
         entry.bgVideoTime = BGVideoCapture.RecordingTime;
         entry.bgVideoFrame = BGVideoCapture.TotalFrameNum;
 

@@ -6,12 +6,14 @@ using System.Reflection;
 
 namespace MPerf
 {
-    public class StableFPSCounter : MonoBehaviour
+    public class StableFPSCounterReproTrace : MonoBehaviour
     {
         public bool dontDestroyOnLoad = false;
 
         public bool on;
         public bool showfpsGraph = false;
+
+        public bool everReadInput = true;
 
         public static bool periodicallyLogFps = false;
 
@@ -22,7 +24,7 @@ namespace MPerf
         private float worstTimer = 0;
         private float shownWorst = 0;
 
-        public static StableFPSCounter instance;
+        public static StableFPSCounterReproTrace instance;
 
         void Awake() {
             if (instance != null) {
@@ -61,13 +63,13 @@ namespace MPerf
 
 
 
-            smoothLastUpdateLoopLen = Mathf.Lerp(smoothLastUpdateLoopLen, PlayerLoopEndMeter.lastUpdateLoopLen, Time.unscaledDeltaTime * smoothAveragesSmoothness);
-            smoothLastFixedUpdateLoopLen = Mathf.Lerp(smoothLastFixedUpdateLoopLen, PlayerLoopEndMeter.lastFixedUpdateLoopLen, Time.unscaledDeltaTime * smoothAveragesSmoothness);
-            smoothfixedsPerLastRenderedFrame = Mathf.Lerp(smoothfixedsPerLastRenderedFrame, PlayerLoopStartMeter.fixedsPerLastRenderedFrame, Time.unscaledDeltaTime * smoothAveragesSmoothness);
+            smoothLastUpdateLoopLen = Mathf.Lerp(smoothLastUpdateLoopLen, PlayerLoopEndMeterReproTrace.lastUpdateLoopLen, Time.unscaledDeltaTime * smoothAveragesSmoothness);
+            smoothLastFixedUpdateLoopLen = Mathf.Lerp(smoothLastFixedUpdateLoopLen, PlayerLoopEndMeterReproTrace.lastFixedUpdateLoopLen, Time.unscaledDeltaTime * smoothAveragesSmoothness);
+            smoothfixedsPerLastRenderedFrame = Mathf.Lerp(smoothfixedsPerLastRenderedFrame, PlayerLoopStartMeterReproTrace.fixedsPerLastRenderedFrame, Time.unscaledDeltaTime * smoothAveragesSmoothness);
 
-            smoothlastApproxOutsideScriptsOfFrameTimeSpent = Mathf.Lerp(smoothlastApproxOutsideScriptsOfFrameTimeSpent, PlayerLoopStartMeter.lastApproxOutsideScriptsOfFrameTimeSpent, Time.unscaledDeltaTime * smoothAveragesSmoothness);
+            smoothlastApproxOutsideScriptsOfFrameTimeSpent = Mathf.Lerp(smoothlastApproxOutsideScriptsOfFrameTimeSpent, PlayerLoopStartMeterReproTrace.lastApproxOutsideScriptsOfFrameTimeSpent, Time.unscaledDeltaTime * smoothAveragesSmoothness);
 
-            smoothTimeSpentInFixedUpdatesThisFrame = Mathf.Lerp(smoothTimeSpentInFixedUpdatesThisFrame, PlayerLoopStartMeter.timeSpentInFixedUpdatesThisFrame, Time.unscaledDeltaTime * smoothAveragesSmoothness);
+            smoothTimeSpentInFixedUpdatesThisFrame = Mathf.Lerp(smoothTimeSpentInFixedUpdatesThisFrame, PlayerLoopStartMeterReproTrace.timeSpentInFixedUpdatesThisFrame, Time.unscaledDeltaTime * smoothAveragesSmoothness);
 
             if (renderTimeChecker != null) {
                 smoothTimeTakenPreCullToPreRender = Mathf.Lerp(smoothTimeTakenPreCullToPreRender, renderTimeChecker.lastTimeTakenPreCullToPreRender, Time.unscaledDeltaTime * smoothAveragesSmoothness);
@@ -238,7 +240,7 @@ namespace MPerf
         }
 
         private void HandleFPSGraph() {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.M)) showfpsGraph = !showfpsGraph;
+            if (everReadInput && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.F) && Input.GetKeyDown(KeyCode.M)) showfpsGraph = !showfpsGraph;
 
             if (FPSGraphDrawer.current != null) {
                 if (FPSGraphDrawer.current.gameObject.activeSelf != showfpsGraph) {
@@ -268,6 +270,7 @@ namespace MPerf
         void FixedUpdate() {
             fixedUpdatesCounter++;
         }
+        
 
         //tracked
         float smoothLastUpdateLoopLen;

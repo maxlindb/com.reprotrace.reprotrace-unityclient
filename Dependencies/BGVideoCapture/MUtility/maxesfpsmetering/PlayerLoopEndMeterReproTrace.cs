@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 namespace MPerf {
-    public class PlayerLoopEndMeter : MonoBehaviour {
+    public class PlayerLoopEndMeterReproTrace : MonoBehaviour {
 
 	    public static float lastUpdateLoopLen;
 	    public static float lastFixedUpdateLoopLen;
@@ -35,9 +35,11 @@ namespace MPerf {
 
         // Update is called once per frame
         void Update () {
-		    lastUpdateLoopLen = Time.realtimeSinceStartup - PlayerLoopStartMeter.timeLastUpdateLoopStarted;
+		    lastUpdateLoopLen = Time.realtimeSinceStartup - PlayerLoopStartMeterReproTrace.timeLastUpdateLoopStarted;
+            //UnityEngine.Debug.Log("END " + Time.frameCount+ " lastUpdateLoopLen:"+ lastUpdateLoopLen);
+            
 
-		    lastFromFirstFixedToLastUpdateTime = Time.realtimeSinceStartup - PlayerLoopStartMeter.timeLastFixedUpdateLoopStarted;
+		    lastFromFirstFixedToLastUpdateTime = Time.realtimeSinceStartup - PlayerLoopStartMeterReproTrace.timeLastFixedUpdateLoopStarted;
 
 		    timestampLastUpdateEnd = Time.realtimeSinceStartup;
 	    }
@@ -57,17 +59,17 @@ namespace MPerf {
 
 	    public static void RecTimeTakenByAnOperation (System.Type inType, float start)
 	    {
-		    if (!PlayerLoopEndMeter.timeUsedPerTypeThisFrame.ContainsKey (inType)) {
-			    PlayerLoopEndMeter.timeUsedPerTypeThisFrame.Add (inType, 0f);
-			    PlayerLoopEndMeter.countPerTypeThisFrame.Add (inType, 0);
+		    if (!PlayerLoopEndMeterReproTrace.timeUsedPerTypeThisFrame.ContainsKey (inType)) {
+			    PlayerLoopEndMeterReproTrace.timeUsedPerTypeThisFrame.Add (inType, 0f);
+			    PlayerLoopEndMeterReproTrace.countPerTypeThisFrame.Add (inType, 0);
 		    }
-		    PlayerLoopEndMeter.timeUsedPerTypeThisFrame [inType] += Time.realtimeSinceStartup - start;
-		    PlayerLoopEndMeter.countPerTypeThisFrame [inType]++;
+		    PlayerLoopEndMeterReproTrace.timeUsedPerTypeThisFrame [inType] += Time.realtimeSinceStartup - start;
+		    PlayerLoopEndMeterReproTrace.countPerTypeThisFrame [inType]++;
 	    }
 
 	    void LateUpdate() {
-			timeSpentInFixedUpdatesLastFrame = PlayerLoopStartMeter.timeSpentInFixedUpdatesThisFrame;
-            PlayerLoopStartMeter.timeSpentInFixedUpdatesThisFrame = 0f;
+			timeSpentInFixedUpdatesLastFrame = PlayerLoopStartMeterReproTrace.timeSpentInFixedUpdatesThisFrame;
+            PlayerLoopStartMeterReproTrace.timeSpentInFixedUpdatesThisFrame = 0f;
 		    lastFixedUpdateLoopLen = 0f;
 
 
@@ -102,18 +104,18 @@ namespace MPerf {
                     Debug.Log(PlayerLoopStartMeter.allTimer.ElapsedMilliseconds + "####FRAME WAS LONG:" + PlayerLoopStartMeter.fromFramefirstUpdateCallTimer.ElapsedMilliseconds + "ms");
                 }
             }*/
-            PlayerLoopStartMeter.fromFramefirstUpdateCallTimer = System.Diagnostics.Stopwatch.StartNew(); //I know a bit weird yes
+            PlayerLoopStartMeterReproTrace.fromFramefirstUpdateCallTimer = System.Diagnostics.Stopwatch.StartNew(); //I know a bit weird yes
 
 
-			var timeSinceUpdateStart = Time.realtimeSinceStartup - PlayerLoopStartMeter.timeLastUpdateLoopStarted;
+			var timeSinceUpdateStart = Time.realtimeSinceStartup - PlayerLoopStartMeterReproTrace.timeLastUpdateLoopStarted;
 			if(timeSinceUpdateStart > 1f) {
 				Debug.LogWarning("From the first call of Update this frame, to the last call of LateUpdate, took "+ timeSinceUpdateStart.ToString("0.00")+" seconds.");
             }
 		}
 
 	    void FixedUpdate() {
-		    lastFixedUpdateLoopLen = Time.realtimeSinceStartup - PlayerLoopStartMeter.timeLastFixedUpdateLoopStarted;
-		    PlayerLoopStartMeter.timeSpentInFixedUpdatesThisFrame += lastFixedUpdateLoopLen;
+		    lastFixedUpdateLoopLen = Time.realtimeSinceStartup - PlayerLoopStartMeterReproTrace.timeLastFixedUpdateLoopStarted;
+		    PlayerLoopStartMeterReproTrace.timeSpentInFixedUpdatesThisFrame += lastFixedUpdateLoopLen;
         }
 
         private IEnumerator TrackingFrameBoundary()

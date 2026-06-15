@@ -84,8 +84,8 @@ namespace MUtility
             intr.stopwatchTicks = stopWatch.ElapsedTicks;
 
 #if UNITY
-            if (MPerf.PlayerLoopStartMeter.fromFramefirstUpdateCallTimer != null)
-                intr.frameAgeTicks = (int)MPerf.PlayerLoopStartMeter.fromFramefirstUpdateCallTimer.ElapsedTicks;
+            if (MPerf.PlayerLoopStartMeterReproTrace.fromFramefirstUpdateCallTimer != null)
+                intr.frameAgeTicks = (int)MPerf.PlayerLoopStartMeterReproTrace.fromFramefirstUpdateCallTimer.ElapsedTicks;
             else
                 intr.frameAgeTicks = -1;
 
