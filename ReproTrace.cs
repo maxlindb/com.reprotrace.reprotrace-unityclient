@@ -8,9 +8,12 @@ public class ReproTrace : MonoBehaviour
 {
     static ReproTrace internalInstance;
 
-    private void Start()
+    private void Awake()
     {
         internalInstance = this;
+    }
+    private void Start()
+    {        
         InitializeReproTrace();
     }
 
@@ -29,7 +32,7 @@ public class ReproTrace : MonoBehaviour
         }
                 
         var prefab = Resources.Load<GameObject>("ReproTraceMainCanvas");        
-        var copy = Instantiate(prefab, internalInstance.transform);
+        var copy = Instantiate(prefab, internalInstance?.transform);
         var rootThing = internalInstance != null ? internalInstance.transform : copy.transform;
         rootThing.transform.SetParent(null);
         DontDestroyOnLoad(rootThing.gameObject);

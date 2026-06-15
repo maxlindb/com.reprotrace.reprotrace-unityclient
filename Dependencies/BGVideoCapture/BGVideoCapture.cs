@@ -1945,7 +1945,7 @@ public class MBugReporterPreferencesProvider : SettingsProvider
     [SettingsProvider]
     public static SettingsProvider CreateSettingsProvider()
     {
-        return new MBugReporterPreferencesProvider("Preferences/MBugReporter");
+        return new MBugReporterPreferencesProvider("Preferences/ReproTrace");
     }
 }
 #endif

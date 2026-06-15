@@ -88,7 +88,10 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
         GUILayout.Space(20);
 
         UnityEditor.EditorGUILayout.PropertyField(serObj.FindProperty("projectAPIToken"), GUILayout.MaxWidth(wid));
+
+        UnityEditor.EditorGUILayout.PropertyField(serObj.FindProperty("normalStartupSceneForGame"), GUILayout.MaxWidth(wid));
         serObj.ApplyModifiedPropertiesWithoutUndo();
+
 
         if (GUILayout.Button("Test settings", GUILayout.MaxWidth(wid))) {
             TestSettings();
@@ -107,10 +110,10 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
     {
         MBugCustomBackEndUploader.TestSettings(out var settsOK, out var error);
         if (settsOK) {
-            UnityEditor.EditorUtility.DisplayDialog("Configuration is OK", error+"\n\nNow you just need to add the ReproTrace prefab to anything that is loaded early and you're done!", "OK");
+            EditorDialog.DisplayAlertDialog("Configuration is OK", error+"\n\nNow you just need to add the ReproTrace prefab to anything that is loaded early and you're done!", "OK", DialogIconType.Info);
         }
         else {
-            UnityEditor.EditorUtility.DisplayDialog("Configuration has issues", error, "OK");
+            EditorDialog.DisplayAlertDialog("Configuration has issues", error, "OK", DialogIconType.Error);
         }
     }
 #endif
