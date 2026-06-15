@@ -110,10 +110,18 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
     {
         MBugCustomBackEndUploader.TestSettings(out var settsOK, out var error);
         if (settsOK) {
+#if UNITY_6000_0_OR_NEWER
             EditorDialog.DisplayAlertDialog("Configuration is OK", error+"\n\nNow you just need to add the ReproTrace prefab to anything that is loaded early and you're done!", "OK", DialogIconType.Info);
+#else
+            UnityEditor.EditorUtility.DisplayDialog("Configuration is OK", error + "\n\nNow you just need to add the ReproTrace prefab to anything that is loaded early and you're done!", "OK");
+#endif
         }
         else {
+#if UNITY_6000_0_OR_NEWER
             EditorDialog.DisplayAlertDialog("Configuration has issues", error, "OK", DialogIconType.Error);
+#else
+            UnityEditor.EditorUtility.DisplayDialog("Configuration has issues", error, "OK");
+#endif
         }
     }
 #endif
