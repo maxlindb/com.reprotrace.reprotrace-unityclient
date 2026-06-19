@@ -9,7 +9,7 @@ public class ExampleCustomBugReportDataProvider : MonoBehaviour
 {
     private void Start()
     {
-        MBugReporter.onProvideGameSpecificBugReporterData = ProvideGameSpecificBugReporterdata;
+        ReproTrace.onProvideGameSpecificBugReporterData = ProvideGameSpecificBugReporterdata;
     }
 
     private static void ProvideGameSpecificBugReporterdata(string bugReportFolderPath)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 //You can either put this stub to your scene, or call ReproTrace.InitializeReproTrace() from anywhere.
@@ -48,4 +49,48 @@ public class ReproTrace : MonoBehaviour
         }        
     }
 #endif
+
+
+    //#################### !!!! GAME - SPECIFIC !!!!!
+    //#################### !!!! IMPLEMENT FOR BETTER BUG REPORTS !!!!!
+    public delegate void BugReportCustomDataDelegate(string bugReportFolderPath);
+
+    public static BugReportCustomDataDelegate onProvideGameSpecificBugReporterData;
+
+    internal static HashSet<string> filesAlreadyAdded = new();
+
+    public static void AddContentToSession(string filePath, bool deleteFileAfter = false, bool supportInstantRewrite = false)
+    {
+        var pathToUse = filePath;
+        if(filesAlreadyAdded.Contains(filePath)) {
+            var test = filePath;
+            int cnt = 1;
+            while (filesAlreadyAdded.Contains(test)) {
+                test = filePath+"_REPVER_"+cnt;
+                cnt++;
+            }
+            pathToUse = test;
+        }
+        filesAlreadyAdded.Add(pathToUse);
+
+        if(pathToUse == filePath && !supportInstantRewrite) {
+            MCrashReporterHost.DumpExtraDataToVideoFolder(pathToUse, deleteFileAfter);
+        }
+        else {
+            if(pathToUse != filePath) File.Copy(filePath, pathToUse, true);
+            if (supportInstantRewrite) {
+                var tempDirForThis = Path.Combine(BGVideoCapture.RootFolder, "fastSyncs");
+                Directory.CreateDirectory(tempDirForThis);
+                var copyToFast = Path.Combine(tempDirForThis, new FileInfo(pathToUse).Name);
+                File.Copy(pathToUse, copyToFast);
+                pathToUse = copyToFast;
+            }
+
+            var pathIsUnchanged = pathToUse == filePath;
+            var doStillDelete = pathIsUnchanged ? deleteFileAfter : true;
+
+            MCrashReporterHost.DumpExtraDataToVideoFolder(pathToUse, doStillDelete);
+            if (deleteFileAfter) Debug.LogWarning("will leak " + pathToUse + " because same-named existed already, autodel logic won't work unless you dedup the filenames yourself");
+        }
+    }
 }

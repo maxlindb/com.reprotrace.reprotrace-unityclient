@@ -18,6 +18,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
     //version 1 streaming data, with logs and frame data
     public const int VERSION = 1;
 
+    public static MBugReporter PublicInstance => Instance;
 
     public const string kFakeProjectNameToReplace = "REPLCPRODNAME";
 
@@ -906,9 +907,9 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
         //Make a custom debug save from this very moment and save it
         //Take last saved save / a few previous saves and save them
         //Copy options / profile files to bug report too
-        if (onProvideGameSpecificBugReporterData != null)
+        if (ReproTrace.onProvideGameSpecificBugReporterData != null)
         {
-            onProvideGameSpecificBugReporterData(currentSnapShotPath);
+            ReproTrace.onProvideGameSpecificBugReporterData(currentSnapShotPath);
         }
     }
 #endif
@@ -939,17 +940,5 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
 
         var destFilePath = Path.Combine(destinationFolderPath, new FileInfo(filePath).Name);
         File.Copy(filePath, destFilePath, true);
-    }
-
-    //#################### !!!! GAME - SPECIFIC !!!!!
-    //#################### !!!! IMPLEMENT FOR BETTER BUG REPORTS !!!!!
-    public delegate void BugReportCustomDataDelegate(string bugReportFolderPath);
-
-    public static BugReportCustomDataDelegate onProvideGameSpecificBugReporterData;
-
-
-    public static void AddContentToSession(string filePath, bool deleteFileAfter = false)
-    {
-        MCrashReporterHost.DumpExtraDataToVideoFolder(filePath, deleteFileAfter);
     }
 }

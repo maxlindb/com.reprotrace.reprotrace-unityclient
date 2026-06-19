@@ -193,6 +193,7 @@ public class BGVideoCapture : MonoBehaviour
 
         MCrashReporterHost.streamedDataBatchCount = 0;
 
+        ReproTrace.filesAlreadyAdded.Clear();
 
         if (ShouldSelfDisable) {
             DestroyImmediate(this);
@@ -373,7 +374,7 @@ public class BGVideoCapture : MonoBehaviour
 
     string currentCaptureID = "NOTSET";
     string currentCaptureFolder;
-    static string RootFolder => applicationDotTemporaryCachePath + "/BGGameVideoCapture" + machineIDExtraPostFix + "/";
+    internal static string RootFolder => applicationDotTemporaryCachePath + "/BGGameVideoCapture" + machineIDExtraPostFix + "/";
 
     private void SetNewSegment() {
         segmentIndex++;
