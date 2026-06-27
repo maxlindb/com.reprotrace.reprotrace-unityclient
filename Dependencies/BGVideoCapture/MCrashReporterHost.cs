@@ -268,6 +268,12 @@ public static class MCrashReporterHost
 
         var thisProcessID = System.Diagnostics.Process.GetCurrentProcess().Id;
 
+        if (!ReproTraceClientConfiguration.BeenLoaded) {
+            Debug.LogWarning("!ReproTraceClientConfiguration.beenLoaded, aborting (normal after quick playmode switch)");
+            return null;
+        }
+        var authBlob = GetAuthBlobBase64();
+
         startInfo.Arguments =
               "\"" + thisProcessID + "\" "
             + "\"" + bgVideoCapFolder + "\" "
@@ -284,7 +290,7 @@ public static class MCrashReporterHost
             + "\"" + false + "\" "
             + "\"" + MBugCustomBackEndUploader.Domain + "\" "
             + "\"" + MBugReporter.kFakeProjectNameToReplace + "\" "
-            + "\"" + GetAuthBlobBase64() + "\" "
+            + "\"" + authBlob + "\" "
             + "\"" + sessionLocalFolder + "\"";
         
 

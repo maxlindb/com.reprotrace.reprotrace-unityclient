@@ -581,6 +581,8 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
         {
             //shadowplaysInProg = 0;
 
+            BGVideoCapture.undyingInstance.OverrideEditorOptOutforSession();
+
             CreateBaseID();
             CreateSnapshot();
             frameLastOpened = Time.frameCount;

@@ -65,6 +65,8 @@ public class BGVideoCapture : MonoBehaviour
     int segmentIndex = -1;
     int segmentFrameNum = 0;
 
+    int succeededInSegmentsCount = 0;
+
     int segmentStartFrame;
 
     public float FPS => config.fps;
@@ -222,7 +224,10 @@ public class BGVideoCapture : MonoBehaviour
     private static bool editorOptOutInEffect = false;
 
     public void OverrideEditorOptOutforSession() {
-        editorOptOutInEffect = false;
+        if(editorOptOutInEffect) {
+            Debug.Log("OverrideEditorOptOutforSession: overriding editor opt out for session (because opened bug reporter window probably?)");
+            editorOptOutInEffect = false;
+        }
     }
 
 
@@ -1028,9 +1033,10 @@ public class BGVideoCapture : MonoBehaviour
                     Debug.LogException(e);
                 }
 
-                if(processingSegmentIndex == 0) {
+                if(succeededInSegmentsCount == 0) {
                     MCrashReporterHost.OnVideoCaptureStarted(GetSessionFolderDepoPath(SessionID), GetSendablesPathThisSession());
                 }
+                succeededInSegmentsCount++;
             }
             catch(ThreadAbortException) {
                 Debug.Log("Ignore the following ThreadAbortException, it's normal");                
