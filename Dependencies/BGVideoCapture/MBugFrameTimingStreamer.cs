@@ -42,10 +42,21 @@ public class MBugFrameTimingStreamer : MonoBehaviour
 
     bool firstFrame = true;
 
+    bool loggedNoGameView;
+    int framesNull = 0;
+
     private void Update()
     {   
         if(firstFrame) { //this only happens once, and previousFrame is null. Nothing to do, stats from this frame will be checked next frame as with any frame.
             firstFrame = false;
+            return;
+        }
+
+        if(previousFrame == null) {
+            framesNull++;
+            if(framesNull == 1000 || (framesNull > 9000 && framesNull % 10000 == 0) ) {
+                Debug.LogWarning("ReproTrace is not seeing frames, is the game view hidden");
+            }
             return;
         }
 

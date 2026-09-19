@@ -62,7 +62,7 @@ public class ShadowplayManipulator : Singleton<ShadowplayManipulator>, IPersiste
             var filesNow = GetPotentialVideoFiles();
             var newFiles = filesNow.Where(x => !filesBefore.Contains(x));
             if(newFiles.Count() > 1) {
-                Debug.LogError("ShadowplayManipulator: More than one new file "+MaxinRandomUtils.PrintableList(newFiles));
+                Debug.LogError("ShadowplayManipulator: More than one new file "+MaxinRandomUtilsReproTrace.PrintableList(newFiles));
             }
             var newFile = newFiles.FirstOrDefault();
             if(newFile != null) {
@@ -102,7 +102,7 @@ public class ShadowplayManipulator : Singleton<ShadowplayManipulator>, IPersiste
         isRecording = false;
         Debug.Log("ShadowplayManipulator: StopRecording: assuming a proper recording is now at "+fil);
         if (!File.Exists(fil)) {
-            Debug.LogError("!File.Exists(currentRecordingFile) this does not make sense (StopRecording)\nEXPECT:"+fil+"\n\nactually exist:"+ MaxinRandomUtils.PrintableList(GetPotentialVideoFiles()) + "\n\n");
+            Debug.LogError("!File.Exists(currentRecordingFile) this does not make sense (StopRecording)\nEXPECT:"+fil+"\n\nactually exist:"+ MaxinRandomUtilsReproTrace.PrintableList(GetPotentialVideoFiles()) + "\n\n");
         }
         return fil;
     }
@@ -132,7 +132,7 @@ public class ShadowplayManipulator : Singleton<ShadowplayManipulator>, IPersiste
         var files = GetPotentialVideoFiles(dvrOnly:true);
         new Thread(() => CheckingForDVRFile(files, onDone)).Start();
 
-        MaxinRandomUtils.DoActionAfterFrames(() => {
+        MaxinRandomUtilsReproTrace.DoActionAfterFrames(() => {
             NativeWindowManagementHell.SetActiveWindowThatWasCached();
         }, 2f, TimeType.Seconds, dontDestroyOnLoad:true);
     }
@@ -147,7 +147,7 @@ public class ShadowplayManipulator : Singleton<ShadowplayManipulator>, IPersiste
             var filesNow = GetPotentialVideoFiles(dvrOnly:true);
             var newFiles = filesNow.Where(x => !filesBefore.Contains(x));
             if (newFiles.Count() > 1) {
-                Debug.LogError("ShadowplayManipulator: More than one new file " + MaxinRandomUtils.PrintableList(newFiles));
+                Debug.LogError("ShadowplayManipulator: More than one new file " + MaxinRandomUtilsReproTrace.PrintableList(newFiles));
             }
             var newFile = newFiles.FirstOrDefault();
             if (newFile != null) {                

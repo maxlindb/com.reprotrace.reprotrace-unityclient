@@ -53,7 +53,7 @@ public class ReproTraceClientConfiguration : ResourceSingleton<ReproTraceClientC
         }
 
         var path = "Assets/Resources/ReproTraceClientConfiguration_ProjectSpecific.asset";
-        new FileInfo(MaxinRandomUtils.UnityAssetPathToAbsolutePath(path)).Directory.Create();
+        new FileInfo(MaxinRandomUtilsReproTrace.UnityAssetPathToAbsolutePath(path)).Directory.Create();
 
         var obj = ScriptableObject.CreateInstance<ReproTraceClientConfiguration>();
         AssetDatabase.CreateAsset(obj, path);

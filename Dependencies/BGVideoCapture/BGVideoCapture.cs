@@ -271,7 +271,7 @@ public class BGVideoCapture : MonoBehaviour
                 var siz = CalculateFolderSize(item.FullName);
                 totalSize += siz;
             }
-            if (!Application.isEditor) Debug.Log("TrimOldSessionsFolder: total size is " + MaxinRandomUtils.ByteLenghtToHumanReadable(totalSize) + ", limit:" + MaxinRandomUtils.ByteLenghtToHumanReadable(allowedSpace));
+            if (!Application.isEditor) Debug.Log("TrimOldSessionsFolder: total size is " + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(totalSize) + ", limit:" + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(allowedSpace));
 
             if(totalSize >= allowedSpace)
             {
@@ -283,7 +283,7 @@ public class BGVideoCapture : MonoBehaviour
                     item.Delete(true);
                 }
 
-                Debug.Log("TrimOldSessionsFolder: after trimming total size is" + MaxinRandomUtils.ByteLenghtToHumanReadable(totalSize) + ", below limit " + MaxinRandomUtils.ByteLenghtToHumanReadable(allowedSpace));
+                Debug.Log("TrimOldSessionsFolder: after trimming total size is" + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(totalSize) + ", below limit " + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(allowedSpace));
             }
             
             //var tooOld = dirs.Where(x => (System.DateTime.UtcNow - x.CreationTimeUtc).TotalDays )
@@ -704,7 +704,7 @@ public class BGVideoCapture : MonoBehaviour
 
         var snapTime = (int)Time.realtimeSinceStartup;
         if (snapTime != lastSec) {
-            tickCountsLastSnap = MaxinRandomUtils.CloneDictionary(tickCounts);
+            tickCountsLastSnap = MaxinRandomUtilsReproTrace.CloneDictionary(tickCounts);
             tickCounts.Clear();
             lastSec = snapTime;
         }
@@ -1570,7 +1570,7 @@ public class BGVideoCapture : MonoBehaviour
         bool showReservedRecordings = false;
 
         if (currentCompressionprocessTotalFrames.HasValue) {
-            GUILayout.Label("Compressing recording ...\n" + MaxinRandomUtils.GetASCIIProgressBar(lastCompressedFrame / (float)currentCompressionprocessTotalFrames.Value, 40));
+            GUILayout.Label("Compressing recording ...\n" + MaxinRandomUtilsReproTrace.GetASCIIProgressBar(lastCompressedFrame / (float)currentCompressionprocessTotalFrames.Value, 40));
         }
 
         if (showReservedRecordings)

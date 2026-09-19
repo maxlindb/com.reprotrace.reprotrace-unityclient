@@ -25,10 +25,10 @@ namespace MUtility
 #if UNITY_EDITOR
 	[InitializeOnLoad]
 #endif
-	public static class MaxinRandomUtils {
+	public static class MaxinRandomUtilsReproTrace {
 
 #if UNITY_EDITOR
-		static MaxinRandomUtils() {
+		static MaxinRandomUtilsReproTrace() {
 			EditorApplication.playModeStateChanged += EditorApplication_playModeStateChanged;
 		}
 
@@ -600,7 +600,7 @@ namespace MUtility
 	    }
 
 	    #if UNITY_EDITOR
-	    [UnityEditor.MenuItem ("Tools/Clear PlayerPrefs")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/Clear PlayerPrefs")]
 	    public static void ClearPlayerPrefs ()
 	    {
 		    PlayerPrefs.DeleteAll ();
@@ -610,7 +610,7 @@ namespace MUtility
             List<RaycastHit> hits = new List<RaycastHit>();
             Vector3 fromPoint = origPos;
             while(true) {
-                if(MaxinRandomUtils.RaycastWithVisual(fromPoint, dir, out RaycastHit hit, 10000f, doVisualize:false)) {
+                if(MaxinRandomUtilsReproTrace.RaycastWithVisual(fromPoint, dir, out RaycastHit hit, 10000f, doVisualize:false)) {
                     fromPoint = hit.point + dir * 0.001f;
                     hits.Add(hit);
                 }
@@ -663,13 +663,13 @@ namespace MUtility
 	    }*/
 
 
-        [UnityEditor.MenuItem("Helper/Hideflags/Get for selected object")]
+        [UnityEditor.MenuItem("Tools/ReprUtil/Helper/Hideflags/Get for selected object")]
         public static void PrintHideFlagsForSelectedObject() {
             var selection = UnityEditor.Selection.activeObject;
             PrintHideFlags(selection);
         }
 
-        [UnityEditor.MenuItem("Helper/Hideflags/Get for selected Gameobject")]
+        [UnityEditor.MenuItem("Tools/ReprUtil/Helper/Hideflags/Get for selected Gameobject")]
         public static void PrintHideFlagsForSelectedGameObject() {
             var selection = UnityEditor.Selection.activeGameObject;
             PrintHideFlags(selection);
@@ -681,7 +681,7 @@ namespace MUtility
         }
 
 
-        [UnityEditor.MenuItem ("Tools/Throw thing from scenecam _&T")]
+        [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/Throw thing from scenecam _&T")]
 	    public static void ThrowThingFromSceneCam() {
 		    Transform shootAnchorTrans = Camera.current.transform;
 
@@ -702,7 +702,7 @@ namespace MUtility
 
         }
 
-	    [UnityEditor.MenuItem ("Tools/GroupSelectionUnderNewParent")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/GroupSelectionUnderNewParent")]
 	    public static void GroupSelectionUnderNewParent() {		
 
 		    var allSelected = UnityEditor.Selection.gameObjects;
@@ -717,7 +717,7 @@ namespace MUtility
 		    }
 	    }
 
-	    [UnityEditor.MenuItem ("Tools/StickToWallByRotation")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/StickToWallByRotation")]
 	    public static void StickToWallByRotation() {
 		    var toStick = UnityEditor.Selection.transforms;
 
@@ -736,7 +736,7 @@ namespace MUtility
 		    }
 	    }
 
-	    [UnityEditor.MenuItem ("Tools/PrintPrefabOverrides")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/PrintPrefabOverrides")]
 	    public static void PrintPrefabOverrides() {
 		    var mods = UnityEditor.PrefabUtility.GetPropertyModifications (UnityEditor.Selection.activeGameObject);
 		    foreach (var item in mods) {		
@@ -752,11 +752,11 @@ namespace MUtility
 				    trans = (item.target as Component).transform;
 			    }
 
-			    Debug.Log (MaxinRandomUtils.GetHieararchyVerbose(trans)+": "+item.propertyPath+" "+item.target,trans.gameObject);
+			    Debug.Log (MaxinRandomUtilsReproTrace.GetHieararchyVerbose(trans)+": "+item.propertyPath+" "+item.target,trans.gameObject);
 		    }
 	    }
 
-        [UnityEditor.MenuItem("Tools/Output scene hierarchy of selection")]
+        [UnityEditor.MenuItem("Tools/ReprUtil/Tools/Output scene hierarchy of selection")]
         public static void OutputSceneHieararchyOfSelection() {
 
             var scene = UnityEditor.Selection.activeGameObject.scene;
@@ -881,12 +881,12 @@ namespace MUtility
 
 #pragma warning disable CS0618
 	    #if UNITY_EDITOR
-	    [UnityEditor.MenuItem ("Tools/GetPathInsidePrefabFromSelectionGOComponent")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/GetPathInsidePrefabFromSelectionGOComponent")]
 	    public static void GetPathInsidePrefabFromSelectionGOComponent() {
 		    Debug.Log (GetPathInsidePrefab (UnityEditor.Selection.activeGameObject.GetComponent<Component>()));
 	    }
 
-	    [UnityEditor.MenuItem ("Tools/GetPathInsidePrefabFromSelectionGO")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/GetPathInsidePrefabFromSelectionGO")]
 	    public static void GetPathInsidePrefabFromSelectionGO() {
 		    Debug.Log (GetPathInsidePrefab (UnityEditor.Selection.activeGameObject));
 	    }
@@ -1154,7 +1154,7 @@ namespace MUtility
 			    toTween.position = Vector3.MoveTowards (toTween.position, inTransform.position, Time.fixedDeltaTime * 0.5f * speed);
 			    toTween.rotation = Quaternion.RotateTowards (toTween.rotation, inTransform.rotation, Time.fixedDeltaTime * 360);
 
-			    if (MaxinRandomUtils.TransformsMatch (toTween, inTransform)) break;
+			    if (MaxinRandomUtilsReproTrace.TransformsMatch (toTween, inTransform)) break;
 			    lastPos = toTween.position;
 
 			    yield return null;
@@ -1281,7 +1281,7 @@ namespace MUtility
 	    }
 
 	    public static bool RaycastWithVisual (Ray ray, out RaycastHit hit, float maxDist, int layerMask = int.MaxValue, QueryTriggerInteraction ignore = QueryTriggerInteraction.Ignore,bool doVisualize = true) {
-		    return MaxinRandomUtils.RaycastWithVisual (ray.origin, ray.direction, out hit, maxDist, layerMask, ignore, doVisualize);
+		    return MaxinRandomUtilsReproTrace.RaycastWithVisual (ray.origin, ray.direction, out hit, maxDist, layerMask, ignore, doVisualize);
 	    }
 
 	    public static bool RaycastWithVisual (Vector3 position, Vector3 direction, out RaycastHit hit, float maxDist, int layerMask = int.MaxValue, QueryTriggerInteraction ignore = QueryTriggerInteraction.Ignore,bool doVisualize = true, bool drawSparkles = true, float sparkleSizMod = 1f, bool superDebug = false) {
@@ -1338,7 +1338,7 @@ namespace MUtility
                         var marker = LeaveMarker(hit.point, "rayhit", Quaternion.LookRotation(hit.normal));
                         marker.transform.localScale = Vector3.one * 0.02f;
                         marker.AddComponent<CommentWithRef>().referredObject = hit.collider;                    
-                        MaxinRandomUtils.DoActionAfterFrames(() => Object.Destroy(marker), 1f, TimeType.Frames);
+                        MaxinRandomUtilsReproTrace.DoActionAfterFrames(() => Object.Destroy(marker), 1f, TimeType.Frames);
                     }
 			    }
 		    }
@@ -1530,7 +1530,7 @@ namespace MUtility
 	    }
 
 
-	    [UnityEditor.MenuItem ("Debug/Print asset GUID of selection")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Debug/Print asset GUID of selection")]
 	    public static void PrintAssetGUIDOfSelection() {
             var selection = UnityEditor.Selection.activeObject;
 
@@ -1547,7 +1547,7 @@ namespace MUtility
             UnityEditor.EditorGUIUtility.systemCopyBuffer = selection.name.PadRight(20) + " guid:" + assetGuid.PadRight(20) + " path:" + path;
         }
 
-        [UnityEditor.MenuItem("CONTEXT/Component/PrintAssetGUID")]
+        [UnityEditor.MenuItem("CONTEXT/Component/ReproUtil/PrintAssetGUID")]
 		public static void PrintGUID(MenuCommand comm)
 		{
 			PrintAssetGUID(comm.context);
@@ -1559,7 +1559,7 @@ namespace MUtility
 		    public string metafileGUID;
 	    }
 
-	    [UnityEditor.MenuItem ("Debug/DebugAllAssets")]
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Debug/DebugAllAssets")]
 	    public static void DebugAllAssetGUIDMisMatches() {
 		
 		    var allAssets = UnityEditor.AssetDatabase.FindAssets ("*");
@@ -1593,7 +1593,7 @@ namespace MUtility
 				    var metaPath = UnityEditor.AssetDatabase.GetTextMetaFilePathFromAssetPath (path);
 				    //Debug.Log (metaPath);
 
-				    var absolutePath = MaxinRandomUtils.UnityAssetPathToAbsolutePath (metaPath);
+				    var absolutePath = MaxinRandomUtilsReproTrace.UnityAssetPathToAbsolutePath (metaPath);
 
 				    //Debug.Log ("abs path:" + absolutePath);
 
@@ -1658,7 +1658,7 @@ namespace MUtility
 	    }
 
 
-	    [UnityEditor.MenuItem ("Debug/Print_m_LocalIdentifierInFile")]	
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Debug/Print_m_LocalIdentifierInFile")]	
 	    public static void PrintSelectionLocalIdentifierInFile() {
 		    PropertyInfo inspectorModeInfo =
 			    typeof(UnityEditor.SerializedObject).GetProperty ("inspectorMode", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -1714,12 +1714,12 @@ namespace MUtility
         }
 
     #if UNITY_EDITOR
-	    [UnityEditor.MenuItem ("Tools/Ping selection")]	
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Tools/Ping selection")]	
 	    public static void PingSelection() {
 		    UnityEditor.EditorGUIUtility.PingObject (UnityEditor.Selection.activeGameObject);
 	    }
 
-	    [UnityEditor.MenuItem ("Debug/Print scenepath of selection")]	
+	    [UnityEditor.MenuItem ("Tools/ReprUtil/Debug/Print scenepath of selection")]	
 	    public static void PrintSelectedHierarchyVerbose() {
 		
 		    //var selection = UnityEditor.Selection.activeTransform;
@@ -1803,10 +1803,10 @@ namespace MUtility
 	    }
 
     #if UNITY_EDITOR
-	    [UnityEditor.MenuItem("Debug/PrintHieararchy")]
+	    [UnityEditor.MenuItem("Tools/ReprUtil/Tools/ReprUtil/Debug/PrintHieararchy")]
     #endif
 	    public static void PrintHieararchy() {
-		    var transforms = MaxinRandomUtils.FindComponentsOfType<Transform> (UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+		    var transforms = MaxinRandomUtilsReproTrace.FindComponentsOfType<Transform> (UnityEngine.SceneManagement.SceneManager.GetActiveScene());
 
 		    var sb = new StringBuilder ();
 
@@ -1828,10 +1828,10 @@ namespace MUtility
 	    }
 
     #if UNITY_EDITOR
-	    [UnityEditor.MenuItem("Debug/PrintComponents")]
+	    [UnityEditor.MenuItem("Tools/ReprUtil/Tools/ReprUtil/Debug/PrintComponents")]
     #endif
 	    public static void PrintComponents() {
-		    var comps = MaxinRandomUtils.FindComponentsOfType<Component> ();
+		    var comps = MaxinRandomUtilsReproTrace.FindComponentsOfType<Component> ();
 
 		    var sb = new StringBuilder ();
 
@@ -1851,7 +1851,7 @@ namespace MUtility
 	    }	
 
     #if UNITY_EDITOR
-	    [UnityEditor.MenuItem("Debug/CompareHierarchies")]
+	    [UnityEditor.MenuItem("Tools/ReprUtil/Tools/ReprUtil/Debug/CompareHierarchies")]
 	    public static void CompareHieararchies() {
 		    var root1 = UnityEditor.Selection.gameObjects [0];
 		    var root2 = UnityEditor.Selection.gameObjects [1];
@@ -1876,7 +1876,7 @@ namespace MUtility
 		    }
 	    }
 
-	    [UnityEditor.MenuItem("Debug/ClearProgressBar")]
+	    [UnityEditor.MenuItem("Tools/ReprUtil/Tools/ReprUtil/Debug/ClearProgressBar")]
 	    public static void ClearProgressBar() {
 		    UnityEditor.EditorUtility.ClearProgressBar ();
 	    }
@@ -1923,7 +1923,7 @@ namespace MUtility
 			    if (inAnim.GetBoneTransform ((HumanBodyBones)i) == inTrans) return (HumanBodyBones)i;
 		    }
 
-		    Debug.LogWarning ("GetBoneType: can't find bonetype for "+MaxinRandomUtils.GetHieararchyVerbose(inTrans));
+		    Debug.LogWarning ("GetBoneType: can't find bonetype for "+MaxinRandomUtilsReproTrace.GetHieararchyVerbose(inTrans));
 		    return (HumanBodyBones)(-1);
 	    }
 
@@ -2078,7 +2078,7 @@ namespace MUtility
                 if (throwExIfFailed) new System.Exception("infinity");
                 LastClampToNavMeshSuccessful = false;
                 if (Application.isPlaying) {
-                    MaxinRandomUtils.LeaveMarker(hitPos, " tried to navmesh clamp this position but result was infinity");
+                    MaxinRandomUtilsReproTrace.LeaveMarker(hitPos, " tried to navmesh clamp this position but result was infinity");
                 }
                 return inPos;
             }
@@ -2114,7 +2114,7 @@ namespace MUtility
                     break;
             }
 
-            lineColor = Color.Lerp(lineColor, Color.black, Mathf.PingPong(MaxinRandomUtils.SomeTime * 5f, 1f));
+            lineColor = Color.Lerp(lineColor, Color.black, Mathf.PingPong(MaxinRandomUtilsReproTrace.SomeTime * 5f, 1f));
 
             for (int i = 0; i < inPath.corners.Length - 1; i++) {
                 var offset = Vector3.up * 0.02f;
@@ -2127,7 +2127,7 @@ namespace MUtility
                 }
 
                 if (fat)
-                    MaxinRandomUtils.DrawOddLine(inPath.corners[i] + offset, inPath.corners[i + 1] + offset);
+                    MaxinRandomUtilsReproTrace.DrawOddLine(inPath.corners[i] + offset, inPath.corners[i + 1] + offset);
 
             }
 
@@ -2207,11 +2207,11 @@ namespace MUtility
 
 
 
-        [UnityEditor.MenuItem("Helper/LockReloadAssemblies")]
+        [UnityEditor.MenuItem("Tools/ReprUtil/Helper/LockReloadAssemblies")]
         static void LockReloadAssemblies() {
             UnityEditor.EditorApplication.LockReloadAssemblies();
         }
-        [UnityEditor.MenuItem("Helper/UnlockReloadAssemblies")]
+        [UnityEditor.MenuItem("Tools/ReprUtil/Helper/UnlockReloadAssemblies")]
         static void UnlockReloadAssemblies() {
             UnityEditor.EditorApplication.UnlockReloadAssemblies();
         }
@@ -2332,7 +2332,7 @@ namespace MUtility
         }
 
         public static void CreateDirectoryLongPathSupprting(string path) {
-            var thruLongPath = MaxinRandomUtils.GetWin32LongPath(path);
+            var thruLongPath = MaxinRandomUtilsReproTrace.GetWin32LongPath(path);
             new DirectoryInfo(thruLongPath).Create();
         }
 
@@ -2342,7 +2342,7 @@ namespace MUtility
             string filePath = "";
 
             if (doWin32Stuff) {
-                filePath = MaxinRandomUtils.GetWin32LongPath(path);
+                filePath = MaxinRandomUtilsReproTrace.GetWin32LongPath(path);
             }
             else {
                 filePath = path; //RRMEMBER
@@ -2593,7 +2593,7 @@ namespace MUtility
         }
 
 #if UNITY_EDITOR
-		[MenuItem("Debug/TestSameFileCheck")]
+		[MenuItem("Tools/ReprUtil/Tools/ReprUtil/Debug/TestSameFileCheck")]
 #endif
 		public static void TestSameFileCheck() {
 			CheckIfFilesAreIdenticalMultiThreaded(@"D:\attbuilds\att_auto\att_cs3792_132811237681389560\att_Data\resources.assets.resS", @"C:\temp\copytest\copiedATT\att_Data\resources.assets.resS");
@@ -2738,9 +2738,9 @@ namespace MUtility
 			var copiedFileInfos = actuallyCopiedFiles.Select(x => new FileInfo(x)).ToList();
 						
 			Debug.Log(new string('#',200) + "\nCopy complete, processed " + fullCopyCount + " files, skipped because hash match:" + fullSkipCount);
-			var log = "Files actually changed:" + copiedFileInfos.Count + " (total size:" + MaxinRandomUtils.ByteLenghtToHumanReadable(copiedFileInfos.Sum(x => x.Length)) + "):";
+			var log = "Files actually changed:" + copiedFileInfos.Count + " (total size:" + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(copiedFileInfos.Sum(x => x.Length)) + "):";
             foreach (var item in copiedFileInfos) {
-				log += "\n\t"+item.FullName+" ("+MaxinRandomUtils.ByteLenghtToHumanReadable(item.Length)+")";
+				log += "\n\t"+item.FullName+" ("+MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(item.Length)+")";
             }
 			log += "\n" + new string('#', 200);
 			Debug.Log(log);
@@ -2896,7 +2896,7 @@ namespace MUtility
 
 					if (timer.ElapsedMilliseconds > 3000) {
 						Debug.Log("hashing took " + timer.ElapsedMilliseconds + " ms for " + filePath + "\n" +
-						"(" + MaxinRandomUtils.ByteLenghtToHumanReadable(file.Length) + ", " + MaxinRandomUtils.ByteLenghtToHumanReadable((long)((float)file.Length / timer.Elapsed.TotalSeconds)) + "/s" + ")");
+						"(" + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable(file.Length) + ", " + MaxinRandomUtilsReproTrace.ByteLenghtToHumanReadable((long)((float)file.Length / timer.Elapsed.TotalSeconds)) + "/s" + ")");
 					}
 					return hashString;
 				}
@@ -3242,7 +3242,7 @@ namespace MUtility
     #if UNITY_EDITOR
 
         //[UnityEditor.MenuItem("CONTEXT/GameObject/CreateParentAndPutUnder")]
-        [UnityEditor.MenuItem("GameObject/CreateParentAndPutUnder",priority = 0)]
+        [UnityEditor.MenuItem("GameObject/ReprUtil/CreateParentAndPutUnder",priority = 0)]
         static void CreateParentAndPutUnder(UnityEditor.MenuCommand command) {
             //Rigidbody body = (Rigidbody)command.context;
             var sel = ((GameObject)command.context).transform;
@@ -3282,7 +3282,7 @@ namespace MUtility
 
 
 
-        /*[UnityEditor.MenuItem("Tools/CreateParentAndPutUnder")]
+        /*[UnityEditor.MenuItem("Tools/ReprUtil/Tools/CreateParentAndPutUnder")]
         public static void CreateParentAndPutUnder() {
             var sel = UnityEditor.Selection.activeTransform;
 
@@ -3677,7 +3677,7 @@ namespace MUtility
 			}*/
 		}
 
-        [UnityEditor.MenuItem("CONTEXT/Transform/CopyGOPath")]
+        [UnityEditor.MenuItem("CONTEXT/Transform/ReprUtil/CopyGOPath")]
         public static void CopyGOPathToClipBoard(UnityEditor.MenuCommand comm) {
             var trans = comm.context as Transform;
             var path = GetHieararchyVerbose(trans);
@@ -3714,8 +3714,8 @@ namespace MUtility
 
                     if (isPrefabInstance || isVariantPrefab) {
 						if(isInGUI) {
-							GUILayout.Label(MUtility.MaxinRandomUtils.GetRotatingChar() + "-This component should be first, but cannot change component sorting");
-							GUILayout.Label("\n\ron this prefab instance! Please select the root prefab." + MUtility.MaxinRandomUtils.GetRotatingChar());
+							GUILayout.Label(MUtility.MaxinRandomUtilsReproTrace.GetRotatingChar() + "-This component should be first, but cannot change component sorting");
+							GUILayout.Label("\n\ron this prefab instance! Please select the root prefab." + MUtility.MaxinRandomUtilsReproTrace.GetRotatingChar());
 						}
 						else {
 							Debug.LogWarning(component + " This component should be first, but cannot change component sorting",component);

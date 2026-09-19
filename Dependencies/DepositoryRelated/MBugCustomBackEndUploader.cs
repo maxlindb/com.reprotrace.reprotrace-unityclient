@@ -120,7 +120,7 @@ public static class MBugCustomBackEndUploader
         var targetUrl = $"{Domain}{UploadAPIEndPoint}";
 
         if (System.Environment.OSVersion.Platform == PlatformID.Win32NT) {
-            localPath = MaxinRandomUtils.GetWin32LongPath(localPath);
+            localPath = MaxinRandomUtilsReproTrace.GetWin32LongPath(localPath);
         }
         
 
@@ -138,7 +138,7 @@ public static class MBugCustomBackEndUploader
             reqq.AllowWriteStreamBuffering = false;
 
             //fileStream.CopyTo(reqq.GetRequestStream(),16 * 1024 * 1024);
-            MaxinRandomUtils.CopyStream(fileStream, reqq.GetRequestStream(), "depoUpload_"+new FileInfo(localPath).Name, onAnalogProgress: ReportProgress);
+            MaxinRandomUtilsReproTrace.CopyStream(fileStream, reqq.GetRequestStream(), "depoUpload_"+new FileInfo(localPath).Name, onAnalogProgress: ReportProgress);
 
             //var response = client.PostAsync(targetUrl, requestContent).Result;
 

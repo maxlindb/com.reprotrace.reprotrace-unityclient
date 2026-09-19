@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VersionNumberOverlay : MonoBehaviour
+public class VersionNumberOverlayReproTrace : MonoBehaviour
 {
     private void OnGUI()
     {

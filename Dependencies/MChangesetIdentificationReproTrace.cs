@@ -82,7 +82,7 @@ public class MChangesetIdentificationReproTrace
 
 
 #if UNITY_EDITOR
-    [UnityEditor.MenuItem("Tools/TestEvaluateChangeSetInEditor")]
+    [UnityEditor.MenuItem("Tools/ReprUtil/TestEvaluateChangeSetInEditor")]
 #endif
     public static void TestEvaluateChangeSetInEditor()
     {

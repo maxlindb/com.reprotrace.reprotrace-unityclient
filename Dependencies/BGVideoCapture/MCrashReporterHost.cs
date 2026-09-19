@@ -63,7 +63,7 @@ public static class MCrashReporterHost
         if (Application.isEditor) {
             mCrashReporterEditorRunID = new System.Random().Next();
             mCrashReporterActiveFlagPath = Application.persistentDataPath + "/MCrashReporter_STAMP__" + mCrashReporterEditorRunID;
-            MUtility.MaxinRandomUtils.StartUndyingCoroutine(CheckingPlaymodeStillActive(),dontDestroyOnLoad:true);
+            MUtility.MaxinRandomUtilsReproTrace.StartUndyingCoroutine(CheckingPlaymodeStillActive(),dontDestroyOnLoad:true);
         }
         
 
@@ -101,7 +101,7 @@ public static class MCrashReporterHost
         additionalMetadata.mbugClientVersion = MBugReporter.VERSION;
         additionalMetadata.startupScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         additionalMetadata.normalStartupSceneForGame = ReproTraceClientConfiguration.Resource.normalStartupSceneForGame;
-        /*if (!Application.isEditor)*/ Debug.Log("Startup scene:" + additionalMetadata.startupScene+" normal:"+additionalMetadata.normalStartupSceneForGame+" is same:"+ (additionalMetadata.startupScene == additionalMetadata.normalStartupSceneForGame));
+        if (!Application.isEditor) Debug.Log("Startup scene:" + additionalMetadata.startupScene+" normal:"+additionalMetadata.normalStartupSceneForGame+" is same:"+ (additionalMetadata.startupScene == additionalMetadata.normalStartupSceneForGame));
 
         ranEarlyStart = true;
     }
@@ -313,7 +313,7 @@ public static class MCrashReporterHost
 
         var combined = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(string.Join("_", auths)));
 
-        var blob = MaxinRandomUtils.EncryptSomething(combined, pass);
+        var blob = MaxinRandomUtilsReproTrace.EncryptSomething(combined, pass);
 
         DebugBlob(blob);
         
@@ -328,7 +328,7 @@ public static class MCrashReporterHost
 
     private static string[] SeeAuth(string blob)
     {
-        var iss = MaxinRandomUtils.DecryptSomething(blob, "76m3fmzbrb77sd3pnpde1x9jny89bsy1");
+        var iss = MaxinRandomUtilsReproTrace.DecryptSomething(blob, "76m3fmzbrb77sd3pnpde1x9jny89bsy1");
         return System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(iss)).Split("_");
     }
 
@@ -342,7 +342,13 @@ public static class MCrashReporterHost
     private static void KillEarlyCrashReporter() {
         if (earlyCrashReporter != null) {
             Log("MCrashReporter_host: Killing early crash reporter");
-            earlyCrashReporter.Kill();
+            try {
+                if(!earlyCrashReporter.HasExited)
+                    earlyCrashReporter.Kill();
+            }
+            catch(System.Exception e) {
+                UnityEngine.Debug.LogError("MCrashReporter_host kill error:"+e.ToString());
+            }
         }
         else {
             Log("MCrashReporter_host: no early crash reporter to kill");

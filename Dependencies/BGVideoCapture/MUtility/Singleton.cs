@@ -25,14 +25,14 @@ namespace MUtility
 
                     if(m_instance == null && typeof(IFindDisabledSingleton).IsAssignableFrom(typeof(T))) {
                         Debug.LogWarning("Singleton doing FindComponentsOfType " + typeof(T).Name);
-                        m_instance = MaxinRandomUtils.FindComponentsOfType<T>().FirstOrDefault();
+                        m_instance = MaxinRandomUtilsReproTrace.FindComponentsOfType<T>().FirstOrDefault();
                     }
 
                     if (m_instance == null) {
 
                         if (isSelfCreating) {
 
-                            if (MaxinRandomUtils.IsQuitting)
+                            if (MaxinRandomUtilsReproTrace.IsQuitting)
                                 throw new System.Exception("Aborting creation of a new singleton instance of type "+typeof(T).Name+" because the game is quitting! Check your code and branch by MaxinRandomUtils.IsQuitting earlier to not hit nullrefs this likely causes");
 
                             if(SingletonHelper.creatingInstanceOfType == typeof(T)) {
@@ -101,7 +101,7 @@ namespace MUtility
                     var comps = gameObject.GetComponents<Component>();
                     var otherComps = comps.Where(x => !(x is Transform) && !(x is T)).ToArray();
                     if (otherComps.Length > 0) {
-                        Debug.LogError("BAD: Singleton destroying is destroying other components !!!! " + MaxinRandomUtils.PrintableList(otherComps.Select(x => x.GetType().Name), ","));
+                        Debug.LogError("BAD: Singleton destroying is destroying other components !!!! " + MaxinRandomUtilsReproTrace.PrintableList(otherComps.Select(x => x.GetType().Name), ","));
                     }
                 }
 

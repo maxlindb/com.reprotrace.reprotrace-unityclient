@@ -587,7 +587,7 @@ public class MBugReporter : MUtility.Singleton<MBugReporter>
             CreateSnapshot();
             frameLastOpened = Time.frameCount;
 
-            MaxinRandomUtils.DoActionAfterFrames(() => {
+            MaxinRandomUtilsReproTrace.DoActionAfterFrames(() => {
                 toggledRoot.SetActive(true);
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inputField.gameObject);
                 inputField.ActivateInputField();
